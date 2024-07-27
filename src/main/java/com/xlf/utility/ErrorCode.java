@@ -40,7 +40,13 @@ public enum ErrorCode {
     OPERATION_ILLEGAL("OperationIllegal", 40020, "操作非法"),
     OPERATION_DENIED("OperationDenied", 40021, "操作被拒绝"),
     OPERATION_NOT_ALLOWED("OperationNotAllowed", 40022, "操作不允许"),
-    OPERATION_NOT_SUPPORTED("OperationNotSupported", 40023, "操作不支持");
+    OPERATION_NOT_SUPPORTED("OperationNotSupported", 40023, "操作不支持"),
+    PAGE_NOT_FOUND("PageNotFound", 40401, "页面未找到"),
+    METHOD_NOT_ALLOWED("MethodNotAllowed", 40501, "方法不允许"),
+    UNAUTHORIZED("Unauthorized", 40101, "未授权"),
+    FORBIDDEN("Forbidden", 40301, "禁止访问"),
+    BAD_REQUEST("BadRequest", 40000, "错误请求"),
+    NOT_ACCEPTABLE("NotAcceptable", 40601, "不可接受");
 
     final String output;
     final Integer code;
