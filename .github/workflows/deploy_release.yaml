@@ -1,0 +1,45 @@
+name: 构建和发布到主分支
+
+on:
+  push:
+    branches:
+      - master  # 当推送到 master 分支时触发
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v2
+
+      - name: 设置 JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: 使用 Maven 构建
+        run: mvn clean package
+
+      - name: 获取项目版本
+        id: get_version
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "PROJECT_VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: 安装 GitHub CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gh
+
+      - name: 登录 GitHub CLI
+        run: |
+          echo "${{ secrets.MYGITHUBTOKEN }}" | gh auth login --with-token
+
+      - name: 创建 GitHub Release
+        run: |
+          RELEASE_TAG="v${{ env.PROJECT_VERSION }}"
+          gh release create $RELEASE_TAG target/*.jar -t $RELEASE_TAG -n "从 master 分支创建的版本 $RELEASE_TAG"
+        env:
+          GITHUB_TOKEN: ${{ secrets.MYGITHUBTOKEN }}
