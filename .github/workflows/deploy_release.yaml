@@ -22,6 +22,12 @@ jobs:
       - name: 使用 Maven 构建
         run: mvn clean package
 
+      - name: 获取项目版本
+        id: get_version
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "PROJECT_VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: 安装 GitHub CLI
         run: |
           sudo apt-get update
@@ -29,11 +35,12 @@ jobs:
 
       - name: 登录 GitHub CLI
         run: |
-          echo "${{ secrets.MyGithubToken }}" | gh auth login --with-token
+          echo "${{ secrets.MYGITHUBTOKEN }}" | gh auth login --with-token
 
       - name: 创建 GitHub Release
         run: |
-          tag_name="v$(date +'%Y%m%d%H%M%S')"  # 根据时间生成唯一的标签名
-          gh release create $tag_name target/*.jar -t $tag_name -n "从 master 分支创建的版本"
+          TIMESTAMP=$(date +'%Y%m%d%H%M%S')
+          RELEASE_TAG="v${{ env.PROJECT_VERSION }}-$TIMESTAMP"
+          gh release create $RELEASE_TAG target/*.jar -t $RELEASE_TAG -n "从 master 分支创建的版本 $RELEASE_TAG"
         env:
-          GITHUB_TOKEN: ${{ secrets.MyGithubToken }}
+          GITHUB_TOKEN: ${{ secrets.MYGITHUBTOKEN }}

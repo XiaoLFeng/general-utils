@@ -1,20 +1,27 @@
-name: Publish package to GitHub Packages
+name: 发布包到 GitHub Packages
+
 on:
   release:
-    types: [created]
+    types: [created]  # 在创建 Release 时触发
+
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
+      packages: write  # 允许写入包
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 JDK
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Publish package
+
+      - name: 发布包到 GitHub Packages
         run: mvn --batch-mode deploy
         env:
-          GITHUB_TOKEN: ${{ secrets.MyGithubToken }}
+          GITHUB_TOKEN: ${{ secrets.MYGITHUBTOKEN }}
