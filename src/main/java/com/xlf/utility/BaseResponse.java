@@ -2,6 +2,7 @@ package com.xlf.utility;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 
 /**
  * BaseResponse
@@ -15,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuppressWarnings("unused")
-public record BaseResponse(String output, Integer code, String message, Object data) {
+public record BaseResponse<E>(String output, Integer code, String message, String errorMessage, E data) {
 
     /**
      * BaseResponse
@@ -27,10 +28,11 @@ public record BaseResponse(String output, Integer code, String message, Object d
      * @param message 消息
      * @param data 数据
      */
-    public BaseResponse(String output, Integer code, String message, Object data) {
+    public BaseResponse(String output, Integer code, String message, String errorMessage, E data) {
         this.output = output;
         this.code = code;
         this.message = message;
+        this.errorMessage = errorMessage;
         this.data = data;
         log.info("============================================================");
     }

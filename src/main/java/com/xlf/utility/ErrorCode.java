@@ -1,5 +1,6 @@
 package com.xlf.utility;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
  * @since v1.0.1
  */
 @RequiredArgsConstructor
+@Getter
 @SuppressWarnings("unused")
 public enum ErrorCode {
     SERVER_INTERNAL_ERROR("ServerInternalError", 50001, "服务器内部错误"),
