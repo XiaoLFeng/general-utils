@@ -28,11 +28,6 @@ jobs:
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "PROJECT_VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: 发布包到 GitHub Packages
-        run: mvn --batch-mode deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.MYGITHUBTOKEN }}
-
       - name: 安装 GitHub CLI
         run: |
           sudo apt-get update
