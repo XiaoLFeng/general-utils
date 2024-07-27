@@ -1,0 +1,28 @@
+name: 构建和发布到主分支
+on:
+  push:
+    branches:
+      - master  # 当推送到 master 分支时触发
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v2
+      - name: 设置 JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+      - name: 使用 Maven 构建
+        run: mvn clean package
+      - name: 设置 GitHub CLI
+        uses: actions/gh-cli@v1
+      - name: 创建 GitHub Release
+        id: create_release
+        run: |
+          tag_name="v$(date +'%Y%m%d%H%M%S')"  # 根据时间生成唯一的标签名
+          gh release create $tag_name target/*.jar -t $tag_name -n "从 master 分支创建的版本"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
