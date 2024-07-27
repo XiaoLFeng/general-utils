@@ -1,4 +1,4 @@
-package com.xlf.utility.entity;
+package com.xlf.utility;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -12,11 +12,12 @@ import java.util.HashMap;
  * 用于返回结果的工具类
  *
  * @author xiao_lfeng
- * @version v1.0.0-SNAPSHOT
+ * @version v1.0.1
  * @see ResponseEntity
- * @since v1.0.0-SNAPSHOT
+ * @since v1.0.1
  */
 @Slf4j
+@SuppressWarnings("unused")
 public class ResultUtil {
     /**
      * Success
