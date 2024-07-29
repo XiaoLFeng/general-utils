@@ -2,7 +2,7 @@ package com.xlf.utility;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * BaseResponse
@@ -16,17 +16,23 @@ import lombok.val;
 @Slf4j
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuppressWarnings("unused")
-public record BaseResponse<E>(String output, Integer code, String message, String errorMessage, E data) {
+public record BaseResponse<E>(
+        @NotNull String output,
+        @NotNull Integer code,
+        @NotNull String message,
+        String errorMessage,
+        E data
+) {
 
     /**
      * BaseResponse
      * <hr/>
      * 构造函数, 用于初始化返回结果
      *
-     * @param output 输出
-     * @param code 状态码
+     * @param output  输出
+     * @param code    状态码
      * @param message 消息
-     * @param data 数据
+     * @param data    数据
      */
     public BaseResponse(String output, Integer code, String message, String errorMessage, E data) {
         this.output = output;
@@ -34,6 +40,5 @@ public record BaseResponse<E>(String output, Integer code, String message, Strin
         this.message = message;
         this.errorMessage = errorMessage;
         this.data = data;
-        log.info("============================================================");
     }
 }
