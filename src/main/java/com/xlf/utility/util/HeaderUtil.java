@@ -2,6 +2,7 @@ package com.xlf.utility.util;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
@@ -32,13 +33,15 @@ public class HeaderUtil {
      * @param request 请求
      * @return UUID
      */
-    @NotNull
+    @Nullable
     public static UUID getAuthorizeUserUuid(@NotNull HttpServletRequest request) {
         String userUuid = request.getHeader("Authorization");
         // 处理 Bearer Token
         if (userUuid != null && userUuid.startsWith("Bearer ")) {
             userUuid = userUuid.substring(7);
+            return UuidUtil.convertToUuid(userUuid);
+        } else {
+            return null;
         }
-        return UuidUtil.convertToUuid(userUuid);
     }
 }
