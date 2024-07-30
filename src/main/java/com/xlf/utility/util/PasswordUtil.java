@@ -31,7 +31,7 @@ public class PasswordUtil {
      */
     @NotNull
     public static String encrypt(String password) {
-        String sha256Hash = BaseUtil.sha256Hash(password);
+        String sha256Hash = EncryptUtil.sha256Hash(password);
         return BCrypt.hashpw(sha256Hash, BCrypt.gensalt());
     }
 
@@ -48,7 +48,7 @@ public class PasswordUtil {
      * @return 是否匹配
      */
     public static boolean verify(String password, String encryptedPassword) {
-        String sha256Hash = BaseUtil.sha256Hash(password);
+        String sha256Hash = EncryptUtil.sha256Hash(password);
         return BCrypt.checkpw(sha256Hash, encryptedPassword);
     }
 }

@@ -2,9 +2,6 @@ package com.xlf.utility.util;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 /**
@@ -14,9 +11,9 @@ import java.util.Random;
  * <p>
  * 用于提供基础工具方法
  *
- * @since v1.0.1
- * @version v1.0.1
  * @author xiao_lfeng
+ * @version v1.0.1
+ * @since v1.0.1
  */
 @SuppressWarnings("unused")
 public class BaseUtil {
@@ -42,34 +39,5 @@ public class BaseUtil {
             stringBuilder.append(code);
         }
         return stringBuilder.toString();
-    }
-
-    /**
-     * <h1>SHA-256加密</h1>
-     * <hr/>
-     * 使用SHA-256加密字符串
-     *
-     * @param input 输入
-     * @return 加密后的字符串
-     */
-    @NotNull
-    protected static String sha256Hash(@NotNull String input) {
-        try {
-            // 获取 SHA-256 实例
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
-            // 将字节数组转换为十六进制字符串
-            StringBuilder hexString = new StringBuilder(2 * hash.length);
-            for (byte b : hash) {
-                String hex = Integer.toHexString(0xff & b);
-                if (hex.length() == 1) {
-                    hexString.append('0');
-                }
-                hexString.append(hex);
-            }
-            return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
