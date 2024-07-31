@@ -107,8 +107,7 @@ public class ConvertUtil {
                 field.setAccessible(true);
                 // 获取参数类型名字
                 String filedTypeName = field.getType().getName();
-                // 判断是否为时间类型，使用equalsIgnoreCase比较字符串，不区分大小写
-                // 给obj的属性赋值
+                // 判断是否为日期类型
                 if ("java.util.date".equalsIgnoreCase(filedTypeName)) {
                     String dateTimestamp = (String) map.get(field.getName());
                     if ("null".equalsIgnoreCase(dateTimestamp)) {
@@ -116,9 +115,54 @@ public class ConvertUtil {
                     } else {
                         field.set(obj, sdf.parse(dateTimestamp));
                     }
-                } else {
-                    field.set(obj, map.get(field.getName()));
                 }
+                // 是否是布尔类型
+                if ("java.lang.Boolean".equalsIgnoreCase(filedTypeName)) {
+                    String value = (String) map.get(field.getName());
+                    if ("null".equalsIgnoreCase(value)) {
+                        field.set(obj, null);
+                    } else {
+                        field.set(obj, Boolean.parseBoolean(value));
+                    }
+                }
+                // 是否是整型
+                if ("java.lang.Integer".equalsIgnoreCase(filedTypeName)) {
+                    String value = (String) map.get(field.getName());
+                    if ("null".equalsIgnoreCase(value)) {
+                        field.set(obj, null);
+                    } else {
+                        field.set(obj, Integer.parseInt(value));
+                    }
+                }
+                // 是否是长整型
+                if ("java.lang.Long".equalsIgnoreCase(filedTypeName)) {
+                    String value = (String) map.get(field.getName());
+                    if ("null".equalsIgnoreCase(value)) {
+                        field.set(obj, null);
+                    } else {
+                        field.set(obj, Long.parseLong(value));
+                    }
+                }
+                // 是否是浮点型
+                if ("java.lang.Float".equalsIgnoreCase(filedTypeName)) {
+                    String value = (String) map.get(field.getName());
+                    if ("null".equalsIgnoreCase(value)) {
+                        field.set(obj, null);
+                    } else {
+                        field.set(obj, Float.parseFloat(value));
+                    }
+                }
+                // 是否是双精度浮点型
+                if ("java.lang.Double".equalsIgnoreCase(filedTypeName)) {
+                    String value = (String) map.get(field.getName());
+                    if ("null".equalsIgnoreCase(value)) {
+                        field.set(obj, null);
+                    } else {
+                        field.set(obj, Double.parseDouble(value));
+                    }
+                }
+                // 是否是字符串
+                field.set(obj, map.get(field.getName()));
             }
         } catch (Exception e) {
             e.printStackTrace();
