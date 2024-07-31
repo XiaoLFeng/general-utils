@@ -114,7 +114,11 @@ public class ConvertUtil {
                             field.set(obj, Timestamp.valueOf(value.toString()));
                         }
                     } else {
-                        field.set(obj, value);
+                        if (none) {
+                            field.set(obj, null);
+                        } else {
+                            field.set(obj, value);
+                        }
                     }
                 }
             }
