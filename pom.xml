@@ -6,7 +6,7 @@
 
     <groupId>com.xlf.utility</groupId>
     <artifactId>feng-util</artifactId>
-    <version>1.0.7-beta.0.2</version>
+    <version>1.0.7-beta.0.3</version>
     <description>筱锋通用公共仓库</description>
     <url>https://github.com/XiaoLFeng/FengUtil</url>
 
@@ -91,6 +91,12 @@
                     <groupId>org.apache.tomcat</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <!-- Google Gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
         </dependency>
     </dependencies>
 
