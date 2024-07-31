@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class MapToBeanTest {
     @Test
     public void mapToBean() {
-        UserDO userDO = new UserDO();
+        UserDO userDO;
         HashMap<Object, Object> map = new HashMap<>();
         map.put("uuid", "uuid");
         map.put("username", "username");
@@ -27,9 +27,9 @@ public class MapToBeanTest {
         map.put("banReason", "banReason");
         map.put("role", "role");
         map.put("member", "member");
-        map.put("createdAt", new Timestamp(System.currentTimeMillis()));
+        map.put("createdAt", "2024-07-31 15:40:44.847001");
         map.put("updatedAt", "2024-07-31 15:40:44.847001");
-        map.put("bannedAt", null);
+        map.put("bannedAt", "");
         map.put("userQq", "userQq");
         map.put("userWechat", "userWechat");
         userDO = ConvertUtil.convertMapToObject(map, UserDO.class);
@@ -50,8 +50,8 @@ public class MapToBeanTest {
         public String role;
         public String member;
         public Timestamp createdAt;
-        public Timestamp updatedAt;
-        public Date bannedAt;
+        public Date updatedAt;
+        public Timestamp bannedAt;
         public String userQq;
         public String userWechat;
 

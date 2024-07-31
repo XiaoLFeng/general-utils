@@ -66,20 +66,53 @@ public class ConvertUtil {
 
                 if (value != null) {
                     String fieldTypeName = field.getType().getName();
+                    boolean none = "".equalsIgnoreCase(value.toString()) || "null".equalsIgnoreCase(value.toString());
                     if ("java.util.Date".equalsIgnoreCase(fieldTypeName)) {
-                        field.set(obj, sdf.parse(value.toString()));
+                        if (none) {
+                            field.set(obj, null);
+                        } else {
+                            field.set(obj, sdf.parse(value.toString()));
+                        }
                     } else if ("java.lang.Boolean".equalsIgnoreCase(fieldTypeName)) {
-                        field.set(obj, Boolean.parseBoolean(value.toString()));
+                        if ("1".equalsIgnoreCase(value.toString())) {
+                            field.set(obj, true);
+                        } else if ("0".equalsIgnoreCase(value.toString())) {
+                            field.set(obj, false);
+                        } else if (none) {
+                            field.set(obj, null);
+                        } else {
+                            field.set(obj, Boolean.parseBoolean(value.toString()));
+                        }
                     } else if ("java.lang.Integer".equalsIgnoreCase(fieldTypeName)) {
-                        field.set(obj, Integer.parseInt(value.toString()));
+                        if (none) {
+                            field.set(obj, null);
+                        } else {
+                            field.set(obj, Integer.parseInt(value.toString()));
+                        }
                     } else if ("java.lang.Long".equalsIgnoreCase(fieldTypeName)) {
-                        field.set(obj, Long.parseLong(value.toString()));
+                        if (none) {
+                            field.set(obj, null);
+                        } else {
+                            field.set(obj, Long.parseLong(value.toString()));
+                        }
                     } else if ("java.lang.Float".equalsIgnoreCase(fieldTypeName)) {
-                        field.set(obj, Float.parseFloat(value.toString()));
+                        if (none) {
+                            field.set(obj, null);
+                        } else {
+                            field.set(obj, Float.parseFloat(value.toString()));
+                        }
                     } else if ("java.lang.Double".equalsIgnoreCase(fieldTypeName)) {
-                        field.set(obj, Double.parseDouble(value.toString()));
+                        if (none) {
+                            field.set(obj, null);
+                        } else {
+                            field.set(obj, Double.parseDouble(value.toString()));
+                        }
                     } else if ("java.sql.Timestamp".equalsIgnoreCase(fieldTypeName)) {
-                        field.set(obj, Timestamp.valueOf(value.toString()));
+                        if (none) {
+                            field.set(obj, null);
+                        } else {
+                            field.set(obj, Timestamp.valueOf(value.toString()));
+                        }
                     } else {
                         field.set(obj, value);
                     }
