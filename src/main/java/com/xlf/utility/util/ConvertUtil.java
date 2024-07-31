@@ -3,7 +3,11 @@ package com.xlf.utility.util;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +23,7 @@ import java.util.Map;
  * @version v1.0.0
  * @since v1.0.0
  */
+@SuppressWarnings("unused")
 public class ConvertUtil {
     /**
      * 将对象转换为 Map
@@ -79,8 +84,45 @@ public class ConvertUtil {
      * @param <T>   对象的类型
      * @return 对象
      */
+    @Nullable
     public static <T> T convertMapToObject(Map<Object, Object> map, @NotNull Class<T> clazz) {
-        String getJson = new Gson().toJson(map);
-        return new Gson().fromJson(getJson, clazz);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        if (map == null) {
+            return null;
+        }
+        T obj = null;
+        try {
+            // 使用newInstance来创建对象
+            obj = clazz.getDeclaredConstructor().newInstance();
+            // 获取类中的所有字段
+            Field[] fields = obj.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                int mod = field.getModifiers();
+                // 判断是拥有某个修饰符
+                if (Modifier.isStatic(mod) || Modifier.isFinal(mod)) {
+                    continue;
+                }
+                // 当字段使用private修饰时，需要加上
+                field.setAccessible(true);
+                // 获取参数类型名字
+                String filedTypeName = field.getType().getName();
+                // 判断是否为时间类型，使用equalsIgnoreCase比较字符串，不区分大小写
+                // 给obj的属性赋值
+                if ("java.util.date".equalsIgnoreCase(filedTypeName)) {
+                    String dateTimestamp = (String) map.get(field.getName());
+                    if ("null".equalsIgnoreCase(dateTimestamp)) {
+                        field.set(obj, null);
+                    } else {
+                        field.set(obj, sdf.parse(dateTimestamp));
+                    }
+                } else {
+                    field.set(obj, map.get(field.getName()));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return obj;
     }
 }
