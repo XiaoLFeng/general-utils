@@ -9,7 +9,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -111,7 +114,15 @@ public class ConvertUtil {
                         if (none) {
                             field.set(obj, null);
                         } else {
-                            field.set(obj, Timestamp.valueOf(value.toString()));
+                            // 处理标准时间字符串 "yyyy-MM-dd HH:mm:ss"
+                            if (value.toString().matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}")) {
+                                field.set(obj, Timestamp.valueOf(value.toString()));
+                            } else {
+                                // 处理自定义格式 "MMM d, yyyy, h:mm:ss a"
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy, h:mm:ss a", Locale.ENGLISH);
+                                LocalDateTime localDateTime = LocalDateTime.parse(value.toString(), formatter);
+                                field.set(obj, Timestamp.valueOf(localDateTime));
+                            }
                         }
                     } else {
                         if (none) {
