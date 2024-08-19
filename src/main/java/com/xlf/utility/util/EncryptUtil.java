@@ -21,7 +21,7 @@ import java.security.NoSuchAlgorithmException;
 @SuppressWarnings("unused")
 public class EncryptUtil {
     /**
-     * <h4>SHA-256加密</h4>
+     * <h5>SHA-256加密</h5>
      * <hr/>
      * 使用SHA-256加密字符串；
      *
@@ -50,7 +50,7 @@ public class EncryptUtil {
     }
 
     /**
-     * <h4>MD5加密</h4>
+     * <h5>MD5加密</h5>
      * <hr/>
      *
      * @param input 输入

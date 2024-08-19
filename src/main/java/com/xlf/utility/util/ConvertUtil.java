@@ -28,7 +28,7 @@ import java.util.Map;
 public class ConvertUtil {
 
     /**
-     * <h4>将对象转换为 Map</h4>
+     * <h5>将对象转换为 Map</h5>
      * <br/>
      * 将对象转换为 Map，使用 Gson 进行转换，对象中的属性名作为 Map 的 key，属性值作为 Map 的 value
      *
@@ -43,7 +43,7 @@ public class ConvertUtil {
     }
 
     /**
-     * <h4>将对象转换为 Map</h4>
+     * <h5>将对象转换为 Map</h5>
      * <br/>
      * 将对象转换为 Map，使用 Gson 进行转换，转换为 String 类型
      *
@@ -58,7 +58,7 @@ public class ConvertUtil {
     }
 
     /**
-     * <h4>将对象转换为 Map</h4>
+     * <h5>将对象转换为 Map</h5>
      * <br/>
      * 将对象转换为 Map，使用 Gson 进行转换，转换为 Object 类型
      *
@@ -73,7 +73,7 @@ public class ConvertUtil {
     }
 
     /**
-     * <h4>将 Map 转换为对象</h4>
+     * <h5>将 Map 转换为对象</h5>
      * <br/>
      * 将 Map 转换为对象，使用 Gson 进行转换，转换为指定的类
      *

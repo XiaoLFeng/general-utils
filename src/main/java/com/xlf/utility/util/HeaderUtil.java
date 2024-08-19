@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 public class HeaderUtil {
 
     /**
-     * <h4>获取授权用户UUID</h4>
+     * <h5>获取授权用户UUID</h5>
      * <hr/>
      * 用于获取授权用户UUID, 用于权限验证
      * <p>
