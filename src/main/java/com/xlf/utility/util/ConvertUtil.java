@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -153,7 +154,7 @@ public class ConvertUtil {
                                 field.set(obj, Timestamp.valueOf(value.toString()));
                             } else {
                                 // 处理自定义格式 "MMM d, yyyy, h:mm:ss a"
-                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy, h:mm:ss a", Locale.ENGLISH);
                                 LocalDateTime localDateTime = LocalDateTime.parse(value.toString(), formatter);
                                 field.set(obj, Timestamp.valueOf(localDateTime));
                             }
