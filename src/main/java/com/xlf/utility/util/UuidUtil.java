@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.UUID;
 
 /**
- * UuidUtil
+ * <h4>UuidUtil</h4>
  * <hr/>
  * 生成UUID, 用于生成唯一标识
  *
@@ -17,7 +17,7 @@ import java.util.UUID;
 @SuppressWarnings("unused")
 public class UuidUtil {
     /**
-     * <h1>生成UUID</h1>
+     * <h5>生成UUID</h5>
      * <hr/>
      * 生成UUID字符串
      *
@@ -29,7 +29,7 @@ public class UuidUtil {
     }
 
     /**
-     * <h1>生成UUID</h1>
+     * <h5>生成UUID</h5>
      * <hr/>
      * 生成UUID
      *
@@ -41,7 +41,7 @@ public class UuidUtil {
     }
 
     /**
-     * <h1>转换为UUID</h1>
+     * <h5>转换为UUID</h5>
      * <hr/>
      * 将字符串转换为UUID
      * <p>
@@ -56,7 +56,7 @@ public class UuidUtil {
     }
 
     /**
-     * <h1>生成UUID</h1>
+     * <h5>生成UUID</h5>
      * <hr/>
      * 生成UUID字符串, 不带横杠
      * <p>
@@ -70,7 +70,7 @@ public class UuidUtil {
     }
 
     /**
-     * <h1>生成UUID</h1>
+     * <h5>生成UUID</h5>
      * <hr/>
      * 生成UUID
      *
@@ -83,7 +83,7 @@ public class UuidUtil {
     }
 
     /**
-     * <h1>生成UUID</h1>
+     * <h5>生成UUID</h5>
      * <hr/>
      * 生成UUID字符串
      *
@@ -94,7 +94,7 @@ public class UuidUtil {
     }
 
     /**
-     * <h1>生成UUID</h1>
+     * <h5>生成UUID</h5>
      * <hr/>
      * 生成UUID字符串, 不带横杠
      * <p>

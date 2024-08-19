@@ -1,11 +1,7 @@
 package com.xlf.utility.util;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Random;
-
 /**
- * BaseUtil
+ * <h4>BaseUtil</h4>
  * <hr/>
  * 基础工具类
  * <p>

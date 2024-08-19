@@ -12,11 +12,10 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**
- * ConvertUtil
+ * <h4>ConvertUtil</h4>
  * <br/>
  * 转换工具类
  * <p>
@@ -27,6 +26,15 @@ import java.util.Map;
  */
 @SuppressWarnings("unused")
 public class ConvertUtil {
+
+    /**
+     * <h5>将对象转换为 Map</h5>
+     * <br/>
+     * 将对象转换为 Map，使用 Gson 进行转换，对象中的属性名作为 Map 的 key，属性值作为 Map 的 value
+     *
+     * @param obj 对象
+     * @return Map
+     */
     @NotNull
     public static Map<String, Object> convertObjectToMap(@NotNull Object obj) {
         String getJson = new Gson().toJson(obj);
@@ -34,6 +42,14 @@ public class ConvertUtil {
         }.getType());
     }
 
+    /**
+     * <h5>将对象转换为 Map</h5>
+     * <br/>
+     * 将对象转换为 Map，使用 Gson 进行转换，转换为 String 类型
+     *
+     * @param obj 对象
+     * @return Map
+     */
     @NotNull
     public static Map<String, String> convertObjectToMapString(@NotNull Object obj) {
         String getJson = new Gson().toJson(obj);
@@ -41,6 +57,14 @@ public class ConvertUtil {
         }.getType());
     }
 
+    /**
+     * <h5>将对象转换为 Map</h5>
+     * <br/>
+     * 将对象转换为 Map，使用 Gson 进行转换，转换为 Object 类型
+     *
+     * @param obj 对象
+     * @return Map
+     */
     @NotNull
     public static Map<Object, Object> convertObjectToMapObject(@NotNull Object obj) {
         String getJson = new Gson().toJson(obj);
@@ -48,6 +72,16 @@ public class ConvertUtil {
         }.getType());
     }
 
+    /**
+     * <h5>将 Map 转换为对象</h5>
+     * <br/>
+     * 将 Map 转换为对象，使用 Gson 进行转换，转换为指定的类
+     *
+     * @param map   Map
+     * @param clazz 类
+     * @param <T>   泛型
+     * @return 对象
+     */
     @Nullable
     public static <T> T convertMapToObject(Map<Object, Object> map, @NotNull Class<T> clazz) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -119,7 +153,7 @@ public class ConvertUtil {
                                 field.set(obj, Timestamp.valueOf(value.toString()));
                             } else {
                                 // 处理自定义格式 "MMM d, yyyy, h:mm:ss a"
-                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy, h:mm:ss a", Locale.ENGLISH);
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
                                 LocalDateTime localDateTime = LocalDateTime.parse(value.toString(), formatter);
                                 field.set(obj, Timestamp.valueOf(localDateTime));
                             }

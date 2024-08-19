@@ -5,9 +5,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
- * HeaderUtil
+ * <h4>HeaderUtil</h4>
  * <hr/>
  * 用于处理请求头的工具类
  * <p>
@@ -21,9 +22,9 @@ import java.util.UUID;
 public class HeaderUtil {
 
     /**
-     * 获取授权用户UUID
+     * <h5>获取授权用户UUID</h5>
      * <hr/>
-     * 用于获取授权用户UUID
+     * 用于获取授权用户UUID, 用于权限验证
      * <p>
      * 1. 从请求头中获取授权用户UUID
      * 2. 处理 Bearer Token
@@ -41,6 +42,11 @@ public class HeaderUtil {
             userUuid = userUuid.substring(7);
             return UuidUtil.convertToUuid(userUuid);
         } else {
+            if (userUuid != null) {
+                if (Pattern.matches("^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$", userUuid)) {
+                    return UuidUtil.convertToUuid(userUuid);
+                }
+            }
             return null;
         }
     }

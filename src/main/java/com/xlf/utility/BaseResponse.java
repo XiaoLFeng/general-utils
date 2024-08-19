@@ -29,10 +29,11 @@ public record BaseResponse<E>(
      * <hr/>
      * 构造函数, 用于初始化返回结果
      *
-     * @param output  输出
-     * @param code    状态码
-     * @param message 消息
-     * @param data    数据
+     * @param output       输出
+     * @param code         状态码
+     * @param message      消息
+     * @param errorMessage 错误消息
+     * @param data         数据
      */
     public BaseResponse(String output, Integer code, String message, String errorMessage, E data) {
         this.output = output;
