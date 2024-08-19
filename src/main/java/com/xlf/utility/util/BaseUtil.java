@@ -1,7 +1,7 @@
 package com.xlf.utility.util;
 
 /**
- * <h4>BaseUtil</h4>
+ * BaseUtil
  * <hr/>
  * 基础工具类
  * <p>

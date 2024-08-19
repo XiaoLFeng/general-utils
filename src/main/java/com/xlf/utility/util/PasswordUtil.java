@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
- * <h4>PasswordUtil</h4>
+ * PasswordUtil
  * <hr/>
  * 密码工具类
  * <p>
@@ -18,7 +18,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class PasswordUtil {
 
     /**
-     * <h5>加密密码</h5>
+     * 加密密码
      * <hr/>
      * 加密密码
      * <p>
@@ -36,7 +36,7 @@ public class PasswordUtil {
     }
 
     /**
-     * <h5>验证密码</h5>
+     * 验证密码
      * <hr/>
      * 验证密码
      * <p>

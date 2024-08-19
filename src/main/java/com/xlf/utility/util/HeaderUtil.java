@@ -8,7 +8,7 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 /**
- * <h4>HeaderUtil</h4>
+ * HeaderUtil
  * <hr/>
  * 用于处理请求头的工具类
  * <p>
@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 public class HeaderUtil {
 
     /**
-     * <h5>获取授权用户UUID</h5>
+     * 获取授权用户UUID
      * <hr/>
      * 用于获取授权用户UUID, 用于权限验证
      * <p>
