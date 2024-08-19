@@ -35,11 +35,11 @@ jobs:
 
       - name: 登录 GitHub CLI
         run: |
-          echo "${{ secrets.MYGITHUBTOKEN }}" | gh auth login --with-token
+          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
 
       - name: 创建 GitHub Release
         run: |
           RELEASE_TAG="v${{ env.PROJECT_VERSION }}"
           gh release create $RELEASE_TAG target/*.jar -t $RELEASE_TAG -n "从 master 分支创建的版本 $RELEASE_TAG"
         env:
-          GITHUB_TOKEN: ${{ secrets.MYGITHUBTOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
