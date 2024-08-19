@@ -8,7 +8,6 @@ on:
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
-
     steps:
       - name: 检出代码
         uses: actions/checkout@v2
@@ -35,11 +34,11 @@ jobs:
 
       - name: 登录 GitHub CLI
         run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+          echo "${{ secrets.MYGITHUBTOKEN }}" | gh auth login --with-token
 
       - name: 创建 GitHub Release
         run: |
           RELEASE_TAG="v${{ env.PROJECT_VERSION }}"
           gh release create $RELEASE_TAG target/*.jar -t $RELEASE_TAG -n "从 master 分支创建的版本 $RELEASE_TAG"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MYGITHUBTOKEN }}
