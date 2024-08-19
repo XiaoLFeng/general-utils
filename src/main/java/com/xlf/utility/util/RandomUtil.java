@@ -20,7 +20,7 @@ import java.util.Random;
 public class RandomUtil {
 
     /**
-     * <h5>创建随机字符串</h5>
+     * <h4>创建随机字符串</h4>
      * <hr/>
      * 创建指定长度的随机字符串
      *
@@ -44,7 +44,7 @@ public class RandomUtil {
     }
 
     /**
-     * <h5>创建随机数字</h5>
+     * <h4>创建随机数字</h4>
      * <hr/>
      * 创建指定长度的随机数字
      *
@@ -64,7 +64,7 @@ public class RandomUtil {
     }
 
     /**
-     * <h5>创建随机小写字母</h5>
+     * <h4>创建随机小写字母</h4>
      * <hr/>
      * 创建指定长度的随机小写字母
      *
@@ -84,7 +84,7 @@ public class RandomUtil {
     }
 
     /**
-     * <h5>创建随机大写字母</h5>
+     * <h4>创建随机大写字母</h4>
      * <hr/>
      * 创建指定长度的随机大写字母
      *
@@ -104,7 +104,7 @@ public class RandomUtil {
     }
 
     /**
-     * <h5>创建随机字母</h5>
+     * <h4>创建随机字母</h4>
      * <hr/>
      * 创建指定长度的随机字母
      *

@@ -18,7 +18,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class PasswordUtil {
 
     /**
-     * <h5>加密密码</h5>
+     * <h4>加密密码</h4>
      * <hr/>
      * 加密密码
      * <p>
@@ -36,7 +36,7 @@ public class PasswordUtil {
     }
 
     /**
-     * <h5>验证密码</h5>
+     * <h4>验证密码</h4>
      * <hr/>
      * 验证密码
      * <p>
