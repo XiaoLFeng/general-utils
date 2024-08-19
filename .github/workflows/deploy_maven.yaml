@@ -18,11 +18,20 @@ jobs:
           server-id: ossrh
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
+      - name: Set up GPG
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gnupg
+
       - name: Import GPG key
-        uses: crazy-max/ghaction-import-gpg@v6
-        with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
+        run: |
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+
+      - name: Trust GPG key
+        run: |
+          KEY_ID=$(gpg --list-keys --with-colons | grep '^pub' | cut -d':' -f5)
+          echo -e "trust\n5\ny\nquit" | gpg --command-fd 0 --batch --edit-key $KEY_ID
+
       - name: Publish package
         run: mvn --batch-mode deploy
         env:
