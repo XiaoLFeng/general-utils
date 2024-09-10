@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -16,17 +18,21 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * ConvertUtil
- * <br/>
  * 转换工具类
  * <p>
- * 用于将对象转换为 Map
- * </p>
+ * 用于将对象转换为 Map；将 Map 转换为对象；将对象转换为 Map，转换为 String 类型；将对象转换为 Map，转换为 Object 类型
  *
- * @author xiaofeng
+ * @author xiao_lfeng
+ * @version v1.0.1
+ * @since v1.0.1
  */
 @SuppressWarnings("unused")
-public class ConvertUtil {
+public interface ConvertUtil {
+
+    /**
+     * 日志记录器
+     */
+    Logger log = LoggerFactory.getLogger(ConvertUtil.class);
 
     /**
      * 将对象转换为 Map
@@ -37,7 +43,7 @@ public class ConvertUtil {
      * @return Map
      */
     @NotNull
-    public static Map<String, Object> convertObjectToMap(@NotNull Object obj) {
+    static Map<String, Object> convertObjectToMap(@NotNull Object obj) {
         String getJson = new Gson().toJson(obj);
         return new Gson().fromJson(getJson, new TypeToken<HashMap<String, Object>>() {
         }.getType());
@@ -52,7 +58,7 @@ public class ConvertUtil {
      * @return Map
      */
     @NotNull
-    public static Map<String, String> convertObjectToMapString(@NotNull Object obj) {
+    static Map<String, String> convertObjectToMapString(@NotNull Object obj) {
         String getJson = new Gson().toJson(obj);
         return new Gson().fromJson(getJson, new TypeToken<Map<String, String>>() {
         }.getType());
@@ -67,7 +73,7 @@ public class ConvertUtil {
      * @return Map
      */
     @NotNull
-    public static Map<Object, Object> convertObjectToMapObject(@NotNull Object obj) {
+    static Map<Object, Object> convertObjectToMapObject(@NotNull Object obj) {
         String getJson = new Gson().toJson(obj);
         return new Gson().fromJson(getJson, new TypeToken<Map<Object, Object>>() {
         }.getType());
@@ -84,7 +90,7 @@ public class ConvertUtil {
      * @return 对象
      */
     @Nullable
-    public static <T> T convertMapToObject(Map<Object, Object> map, @NotNull Class<T> clazz) {
+    static <T> T convertMapToObject(Map<Object, Object> map, @NotNull Class<T> clazz) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         if (map == null) {
@@ -152,6 +158,11 @@ public class ConvertUtil {
                             // 处理标准时间字符串 "yyyy-MM-dd HH:mm:ss"
                             if (value.toString().matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}")) {
                                 field.set(obj, Timestamp.valueOf(value.toString()));
+                            } else if (value.toString().matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}.\\d{6}")) {
+                                // 处理自定义格式 "yyyy-MM-dd HH:mm:ss.SSSSSS"
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
+                                LocalDateTime localDateTime = LocalDateTime.parse(value.toString(), formatter);
+                                field.set(obj, Timestamp.valueOf(localDateTime));
                             } else {
                                 // 处理自定义格式 "MMM d, yyyy, h:mm:ss a"
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy, h:mm:ss a", Locale.ENGLISH);
@@ -169,7 +180,7 @@ public class ConvertUtil {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("[UTIL] Convert map to object error: {}", e.getMessage());
         }
         return obj;
     }

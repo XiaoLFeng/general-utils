@@ -5,19 +5,16 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Random;
 
 /**
- * RandomUtil
- * <hr/>
  * 随机工具类
  * <p>
- * 用于生成随机字符串
- * </p>
+ * 用于生成随机字符串；生成随机数字；生成随机小写字母；生成随机大写字母；生成随机字母。
  *
- * @since v1.0.0
- * @version v1.0.0
  * @author xiao_lfeng
+ * @version v1.0.0
+ * @since v1.0.0
  */
 @SuppressWarnings("unused")
-public class RandomUtil {
+public interface RandomUtil {
 
     /**
      * 创建随机字符串
@@ -28,7 +25,7 @@ public class RandomUtil {
      * @return 随机字符串
      */
     @NotNull
-    public static String createRandomString(int size) {
+    static String createRandomString(int size) {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < size; i++) {
@@ -52,7 +49,7 @@ public class RandomUtil {
      * @return 随机数字
      */
     @NotNull
-    public static String createRandomInt(int size) {
+    static String createRandomInt(int size) {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < size; i++) {
@@ -72,7 +69,7 @@ public class RandomUtil {
      * @return 随机小写字母
      */
     @NotNull
-    public static String createRandomLowerLetter(int size) {
+    static String createRandomLowerLetter(int size) {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < size; i++) {
@@ -92,7 +89,7 @@ public class RandomUtil {
      * @return 随机大写字母
      */
     @NotNull
-    public static String createRandomUpperLetter(int size) {
+    static String createRandomUpperLetter(int size) {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < size; i++) {
@@ -112,7 +109,7 @@ public class RandomUtil {
      * @return 随机字母
      */
     @NotNull
-    public static String createRandomLetter(int size) {
+    static String createRandomLetter(int size) {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < size; i++) {

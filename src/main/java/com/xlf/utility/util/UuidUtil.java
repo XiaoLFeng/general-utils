@@ -15,7 +15,7 @@ import java.util.UUID;
  * @since v1.0.1
  */
 @SuppressWarnings("unused")
-public class UuidUtil {
+public interface UuidUtil {
     /**
      * 生成UUID
      * <hr/>
@@ -24,7 +24,7 @@ public class UuidUtil {
      * @return UUID字符串
      */
     @NotNull
-    public static String generateStringUuid() {
+    static String generateStringUuid() {
         return java.util.UUID.randomUUID().toString();
     }
 
@@ -36,7 +36,7 @@ public class UuidUtil {
      * @return UUID
      */
     @NotNull
-    public static UUID generateUuid() {
+    static UUID generateUuid() {
         return java.util.UUID.randomUUID();
     }
 
@@ -51,7 +51,7 @@ public class UuidUtil {
      * @return UUID
      */
     @NotNull
-    public static UUID convertToUuid(String uuid) {
+    static UUID convertToUuid(String uuid) {
         return UUID.fromString(uuid);
     }
 
@@ -65,7 +65,7 @@ public class UuidUtil {
      * @return UUID字符串
      */
     @NotNull
-    public static String generateUuidNoDash() {
+    static String generateUuidNoDash() {
         return generateStringUuid().replace("-", "");
     }
 
@@ -78,7 +78,7 @@ public class UuidUtil {
      */
     @NotNull
     @Contract("_ -> new")
-    public static UUID makeUuidFromString(@NotNull String getString) {
+    static UUID makeUuidFromString(@NotNull String getString) {
         return UUID.nameUUIDFromBytes(getString.getBytes());
     }
 
@@ -89,7 +89,7 @@ public class UuidUtil {
      *
      * @return UUID字符串
      */
-    public static String makeStringUuidFromString(@NotNull String getString) {
+    static String makeStringUuidFromString(@NotNull String getString) {
         return UUID.nameUUIDFromBytes(getString.getBytes()).toString();
     }
 
@@ -103,7 +103,7 @@ public class UuidUtil {
      * @return UUID字符串
      */
     @NotNull
-    public static String makeUuidFromStringNoDash(@NotNull String getString) {
+    static String makeUuidFromStringNoDash(@NotNull String getString) {
         return UUID.nameUUIDFromBytes(getString.getBytes()).toString().replace("-", "");
     }
 }

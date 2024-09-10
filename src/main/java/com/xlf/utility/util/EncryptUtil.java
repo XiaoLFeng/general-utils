@@ -7,19 +7,16 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * EncryptUtil
- * <hr/>
  * 加密工具类
  * <p>
- * 用于提供加密工具方法
- * </p>
+ * 用于提供加密工具方法。
  *
- * @since v1.0.1
- * @version v1.0.1
  * @author xiao_lfeng
+ * @version v1.0.1
+ * @since v1.0.1
  */
 @SuppressWarnings("unused")
-public class EncryptUtil {
+public interface EncryptUtil {
     /**
      * SHA-256加密
      * <hr/>
@@ -29,7 +26,7 @@ public class EncryptUtil {
      * @return 加密后的字符串
      */
     @NotNull
-    public static String sha256Hash(@NotNull String input) {
+    static String sha256Hash(@NotNull String input) {
         try {
             // 获取 SHA-256 实例
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -57,7 +54,7 @@ public class EncryptUtil {
      * @return 加密后的字符串
      */
     @NotNull
-    public static String md5(@NotNull String input) {
+    static String md5(@NotNull String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] messageDigest = md.digest(input.getBytes());
