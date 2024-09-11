@@ -1,19 +1,17 @@
 package com.xlf.utility;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * BaseResponse
- * <hr/>
  * 自定义返回结果
+ * <p>
+ * 用于返回结果, 包含输出, 状态码, 消息, 错误消息, 数据。
  *
  * @author xiao_lfeng
  * @version v1.0.1
  * @since v1.0.1
  */
-@Slf4j
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuppressWarnings("unused")
 public record BaseResponse<E>(
@@ -23,10 +21,7 @@ public record BaseResponse<E>(
         String errorMessage,
         E data
 ) {
-
     /**
-     * BaseResponse
-     * <hr/>
      * 构造函数, 用于初始化返回结果
      *
      * @param output       输出
