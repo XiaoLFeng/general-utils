@@ -47,7 +47,7 @@ public class ResultUtil {
      * @return 输出一个成功的结果
      */
     public static @NotNull ResponseEntity<BaseResponse<Void>> success(final String message) {
-        log.info("[RESULT] [{}]{} | {}", 200, "Success", "成功");
+        log.info("[RESU] [{}]{} | {}", 200, "Success", "成功");
         return ResponseEntity
                 .ok(new BaseResponse<>("Success", 200, message, null, null));
     }
@@ -63,7 +63,7 @@ public class ResultUtil {
      * @return 输出一个成功的结果
      */
     public static <T> @NotNull ResponseEntity<BaseResponse<T>> success(final String message, final @NotNull T data) {
-        log.info("[RESULT] [{}]{} | {}(数据: {})", 200, "Success", "成功", data.getClass().getSimpleName());
+        log.info("[RESU] [{}]{} | {}(数据: {})", 200, "Success", "成功", data.getClass().getSimpleName());
         return ResponseEntity
                 .ok(new BaseResponse<>("Success", 200, message, null, data));
     }
@@ -87,7 +87,7 @@ public class ResultUtil {
     ) {
         if (data != null) {
             log.info(
-                    "[RESULT] [{}]{} | {}:{}(数据: {})",
+                    "[RESU] [{}]{} | {}:{}(数据: {})",
                     errorCode.getCode(),
                     errorCode.getOutput(),
                     errorCode.getMessage(),
@@ -96,7 +96,7 @@ public class ResultUtil {
             );
         } else {
             log.info(
-                    "[RESULT] [{}]{} | {}:{}",
+                    "[RESU] [{}]{} | {}:{}",
                     errorCode.getCode(),
                     errorCode.getOutput(),
                     errorCode.getMessage(),

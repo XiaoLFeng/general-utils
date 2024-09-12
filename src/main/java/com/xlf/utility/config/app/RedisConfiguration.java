@@ -23,7 +23,9 @@
 
 package com.xlf.utility.config.app;
 
+import com.xlf.utility.UtilProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -41,7 +43,7 @@ import java.util.Objects;
  * 该类使用 {@link org.springframework.context.annotation.Configuration} 注解标记；使用方式如下：
  * <pre>
  * {@code
- *      public class RedisConfig extends RedisConfigAbstract {
+ *      public class RedisConfig extends RedisConfiguration {
  *           public RedisConfig(DbType dbType) {
  *               super(dbType);
  *           }
@@ -54,7 +56,8 @@ import java.util.Objects;
  * @since 1.0.9-beta.1.0
  */
 @SuppressWarnings("unused")
-public abstract class RedisConfigAbstract {
+@Configuration
+public class RedisConfiguration {
     /**
      * 环境变量
      */
@@ -62,17 +65,17 @@ public abstract class RedisConfigAbstract {
     /**
      * 是否开启事务
      */
-    private final boolean isTransaction;
+    private final UtilProperties properties;
 
     /**
      * 构造函数
      *
-     * @param env           环境变量
-     * @param isTransaction 是否开启事务
+     * @param env        环境变量
+     * @param properties 属性
      */
-    public RedisConfigAbstract(Environment env, boolean isTransaction) {
-        this.isTransaction = isTransaction;
+    public RedisConfiguration(Environment env, UtilProperties properties) {
         this.env = env;
+        this.properties = properties;
     }
 
     /**
@@ -103,14 +106,14 @@ public abstract class RedisConfigAbstract {
     /**
      * 配置 RedisTemplate
      *
-     * @param <E>           泛型
+     * @param <E> 泛型
      * @return RedisTemplate
      */
     @Bean
     public <E> RedisTemplate<String, E> redisTemplate() {
         RedisTemplate<String, E> redis = new RedisTemplate<>();
         redis.setConnectionFactory(jedisConnectionFactory());
-        redis.setEnableTransactionSupport(isTransaction);
+        redis.setEnableTransactionSupport(properties.isDbTransaction());
         return redis;
     }
 

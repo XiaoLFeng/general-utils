@@ -29,7 +29,7 @@ import java.util.Objects;
  * @since v1.0.0
  */
 @SuppressWarnings("unused")
-public abstract class PublicExceptionHandlerAbstract {
+public class PublicExceptionHandlerAbstract {
 
     /**
      * 日志记录器。

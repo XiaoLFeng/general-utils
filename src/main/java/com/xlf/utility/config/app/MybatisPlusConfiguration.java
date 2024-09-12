@@ -1,9 +1,10 @@
 package com.xlf.utility.config.app;
 
-import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.xlf.utility.UtilProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * MybatisPlus 配置类
@@ -14,7 +15,7 @@ import org.springframework.context.annotation.Bean;
  * <pre>
  * {@code
  *     @Configuration
- *     public class MybatisPlusConfig extends MybatisPlusConfigAbstract {
+ *     public class MybatisPlusConfig extends MybatisPlusConfiguration {
  *          public MybatisPlusConfig(DbType dbType) {
  *              super(dbType);
  *          }
@@ -27,11 +28,12 @@ import org.springframework.context.annotation.Bean;
  * @author xiao_lfeng
  */
 @SuppressWarnings("unused")
-public abstract class MybatisPlusConfigAbstract {
-    private final DbType dbType;
+@Configuration
+public class MybatisPlusConfiguration {
+    private final UtilProperties properties;
 
-    public MybatisPlusConfigAbstract(DbType dbType) {
-        this.dbType = dbType;
+    public MybatisPlusConfiguration(UtilProperties properties) {
+        this.properties = properties;
     }
 
     /**
@@ -45,7 +47,7 @@ public abstract class MybatisPlusConfigAbstract {
         PaginationInnerInterceptor pageConfig = new PaginationInnerInterceptor();
 
         pageConfig.setMaxLimit(20L);
-        pageConfig.setDbType(dbType);
+        pageConfig.setDbType(properties.getDbType());
 
         mybatisPlusInterceptor.addInnerInterceptor(pageConfig);
         return mybatisPlusInterceptor;

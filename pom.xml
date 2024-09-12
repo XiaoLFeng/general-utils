@@ -6,7 +6,7 @@
 
     <groupId>com.x-lf.utility</groupId>
     <artifactId>general-utils</artifactId>
-    <version>1.0.9-beta.1.0</version>
+    <version>1.0.9-beta.1.26-SNAPSHOT</version>
     <description>筱锋通用公共仓库</description>
     <url>https://github.com/XiaoLFeng/general-utils</url>
 
@@ -38,8 +38,8 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>ossrh-snapshots</id>
-            <url>https://central.sonatype.com/</url>
+            <id>nexus-snapshots</id>
+            <url>https://nexus.x-lf.com/repository/maven-snapshots/</url>
         </snapshotRepository>
         <repository>
             <id>ossrh-releases</id>
@@ -129,16 +129,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.sonatype.central</groupId>
-                <artifactId>central-publishing-maven-plugin</artifactId>
-                <version>0.4.0</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <publishingServerId>central</publishingServerId>
-                    <tokenAuth>true</tokenAuth>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>

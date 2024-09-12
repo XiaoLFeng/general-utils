@@ -22,10 +22,10 @@ import java.io.IOException;
  * @author xiao_lfeng
  */
 @SuppressWarnings("unused")
-public abstract class BanEmptyRefererAbstract extends OncePerRequestFilter {
+public class BanEmptyReferer extends OncePerRequestFilter {
     private final boolean isJsonOutput;
 
-    public BanEmptyRefererAbstract(boolean isJsonOutput) {
+    public BanEmptyReferer(boolean isJsonOutput) {
         this.isJsonOutput = isJsonOutput;
     }
 
