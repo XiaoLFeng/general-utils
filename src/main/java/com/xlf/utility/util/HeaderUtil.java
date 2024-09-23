@@ -91,4 +91,67 @@ public class HeaderUtil {
     public static boolean hasReferer(@NotNull HttpServletRequest request) {
         return request.getHeader("Referer") != null;
     }
+
+    /**
+     * 获取请求头中的User-Agent
+     * <p>
+     * 用于获取请求头中的User-Agent，若有User-Agent则返回User-Agent，否则返回null。
+     *
+     * @param request 请求
+     * @return User-Agent
+     */
+    @Nullable
+    public static String getUserAgent(@NotNull HttpServletRequest request) {
+        return request.getHeader("User-Agent");
+    }
+
+    /**
+     * 判断请求头中是否有User-Agent
+     * <p>
+     * 用于判断请求头中是否有User-Agent，若有User-Agent则返回true，否则返回false。
+     *
+     * @param request 请求
+     * @return 是否有User-Agent
+     */
+    public static boolean hasUserAgent(@NotNull HttpServletRequest request) {
+        return request.getHeader("User-Agent") != null;
+    }
+
+    /**
+     * 获取请求头中的Host
+     * <p>
+     * 用于获取请求头中的Host，若有Host则返回Host，否则返回null。
+     *
+     * @param request 请求
+     * @return Host
+     */
+    @Nullable
+    public static String getHost(@NotNull HttpServletRequest request) {
+        return request.getHeader("Host");
+    }
+
+    /**
+     * 判断请求头中是否有Host
+     * <p>
+     * 用于判断请求头中是否有Host，若有Host则返回true，否则返回false。
+     *
+     * @param request 请求
+     * @return 是否有Host
+     */
+    public static boolean hasHost(@NotNull HttpServletRequest request) {
+        return request.getHeader("Host") != null;
+    }
+
+    /**
+     * 获取请求头中的Accept
+     * <p>
+     * 用于获取请求头中的Accept，若有Accept则返回Accept，否则返回null。
+     *
+     * @param request 请求
+     * @return Accept
+     */
+    @Nullable
+    public static String getAccept(@NotNull HttpServletRequest request) {
+        return request.getHeader("Accept");
+    }
 }

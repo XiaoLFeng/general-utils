@@ -214,8 +214,8 @@ public class PublicExceptionHandlerAbstract {
      * @return 返回资源未找到异常信息
      */
     @ExceptionHandler(NoResourceFoundException.class)
-    public ResponseEntity<BaseResponse<NoResourceFoundException>> handleNoResourceFoundException(NoResourceFoundException e) {
-        log.error("[ERRO] 资源未找到异常 | {}", e.getMessage(), e);
-        return ResultUtil.error(ErrorCode.PAGE_NOT_FOUND, "资源未找到", e);
+    public ResponseEntity<BaseResponse<NoResourceFoundException>> handleNoResourceFoundException(@NotNull NoResourceFoundException e) {
+        log.error("[ERRO] 资源未找到异常 | {}", e.getMessage());
+        return ResultUtil.error(ErrorCode.PAGE_NOT_FOUND, "资源未找到", null);
     }
 }
