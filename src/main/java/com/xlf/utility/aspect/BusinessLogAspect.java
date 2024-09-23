@@ -75,7 +75,7 @@ public class BusinessLogAspect {
      * @param pjp 切入点
      * @throws Throwable 异常
      */
-    public void beforeDaoLog(@NotNull ProceedingJoinPoint pjp) throws Throwable {
+    public Object beforeDaoLog(@NotNull ProceedingJoinPoint pjp) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
         Class<?> declaringType = methodSignature.getDeclaringType();
         String methodName = methodSignature.getName();
@@ -95,5 +95,7 @@ public class BusinessLogAspect {
         if (result != null) {
             log.debug("\t> 传出信息：{}", result);
         }
+
+        return result;
     }
 }
