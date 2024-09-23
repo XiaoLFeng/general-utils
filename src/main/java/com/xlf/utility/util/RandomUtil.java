@@ -14,7 +14,7 @@ import java.util.Random;
  * @since v1.0.0
  */
 @SuppressWarnings("unused")
-public interface RandomUtil {
+public class RandomUtil {
 
     /**
      * 创建随机字符串
@@ -25,7 +25,7 @@ public interface RandomUtil {
      * @return 随机字符串
      */
     @NotNull
-    static String createRandomString(int size) {
+    public static String createRandomString(int size) {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < size; i++) {
@@ -49,7 +49,7 @@ public interface RandomUtil {
      * @return 随机数字
      */
     @NotNull
-    static String createRandomInt(int size) {
+    public static String createRandomInt(int size) {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < size; i++) {
@@ -69,7 +69,7 @@ public interface RandomUtil {
      * @return 随机小写字母
      */
     @NotNull
-    static String createRandomLowerLetter(int size) {
+    public static String createRandomLowerLetter(int size) {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < size; i++) {
@@ -89,7 +89,7 @@ public interface RandomUtil {
      * @return 随机大写字母
      */
     @NotNull
-    static String createRandomUpperLetter(int size) {
+    public static String createRandomUpperLetter(int size) {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < size; i++) {
@@ -109,7 +109,7 @@ public interface RandomUtil {
      * @return 随机字母
      */
     @NotNull
-    static String createRandomLetter(int size) {
+    public static String createRandomLetter(int size) {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < size; i++) {

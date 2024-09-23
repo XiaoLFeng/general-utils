@@ -13,7 +13,7 @@ import org.mindrot.jbcrypt.BCrypt;
  * @since v1.0.1
  */
 @SuppressWarnings("unused")
-public interface PasswordUtil {
+public class PasswordUtil {
 
     /**
      * 加密密码
@@ -28,7 +28,7 @@ public interface PasswordUtil {
      * @return 加密后的密码
      */
     @NotNull
-    static String encrypt(String password) {
+    public static String encrypt(String password) {
         String sha256Hash = EncryptUtil.sha256Hash(password);
         return BCrypt.hashpw(sha256Hash, BCrypt.gensalt());
     }
@@ -45,7 +45,7 @@ public interface PasswordUtil {
      * @param encryptedPassword 加密后的密码
      * @return 是否匹配
      */
-    static boolean verify(String password, String encryptedPassword) {
+    public static boolean verify(String password, String encryptedPassword) {
         String sha256Hash = EncryptUtil.sha256Hash(password);
         return BCrypt.checkpw(sha256Hash, encryptedPassword);
     }

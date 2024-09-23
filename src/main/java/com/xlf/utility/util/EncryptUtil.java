@@ -16,7 +16,7 @@ import java.security.NoSuchAlgorithmException;
  * @since v1.0.1
  */
 @SuppressWarnings("unused")
-public interface EncryptUtil {
+public class EncryptUtil {
     /**
      * SHA-256加密
      * <hr/>
@@ -26,7 +26,7 @@ public interface EncryptUtil {
      * @return 加密后的字符串
      */
     @NotNull
-    static String sha256Hash(@NotNull String input) {
+    public static String sha256Hash(@NotNull String input) {
         try {
             // 获取 SHA-256 实例
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -54,7 +54,7 @@ public interface EncryptUtil {
      * @return 加密后的字符串
      */
     @NotNull
-    static String md5(@NotNull String input) {
+    public static String md5(@NotNull String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] messageDigest = md.digest(input.getBytes());

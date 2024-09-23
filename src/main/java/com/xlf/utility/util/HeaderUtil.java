@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  * @since v1.0.1
  */
 @SuppressWarnings("unused")
-public interface HeaderUtil {
+public class HeaderUtil {
 
     /**
      * 获取授权用户UUID
@@ -33,7 +33,7 @@ public interface HeaderUtil {
      * @return UUID
      */
     @Nullable
-    static UUID getAuthorizeUserUuid(@NotNull HttpServletRequest request) {
+    public static UUID getAuthorizeUserUuid(@NotNull HttpServletRequest request) {
         String userUuid = request.getHeader("Authorization");
         // 处理 Bearer Token
         if (userUuid != null && userUuid.startsWith("Bearer ")) {

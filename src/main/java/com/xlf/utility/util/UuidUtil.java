@@ -14,7 +14,7 @@ import java.util.UUID;
  * @since v1.0.1
  */
 @SuppressWarnings("unused")
-public interface UuidUtil {
+public class UuidUtil {
     /**
      * 生成UUID
      * <p>
@@ -23,7 +23,7 @@ public interface UuidUtil {
      * @return UUID字符串
      */
     @NotNull
-    static String generateStringUuid() {
+    public static String generateStringUuid() {
         return java.util.UUID.randomUUID().toString();
     }
 
@@ -35,7 +35,7 @@ public interface UuidUtil {
      * @return UUID
      */
     @NotNull
-    static UUID generateUuid() {
+    public static UUID generateUuid() {
         return java.util.UUID.randomUUID();
     }
 
@@ -50,7 +50,7 @@ public interface UuidUtil {
      * @return UUID
      */
     @NotNull
-    static UUID convertToUuid(String uuid) {
+    public static UUID convertToUuid(String uuid) {
         return UUID.fromString(uuid);
     }
 
@@ -64,7 +64,7 @@ public interface UuidUtil {
      * @return UUID字符串
      */
     @NotNull
-    static String generateUuidNoDash() {
+    public static String generateUuidNoDash() {
         return generateStringUuid().replace("-", "");
     }
 
@@ -79,7 +79,7 @@ public interface UuidUtil {
      * @return UUID
      */
     @NotNull
-    static UUID makeUuidFromString(@NotNull String getString) {
+    public static UUID makeUuidFromString(@NotNull String getString) {
         return UUID.nameUUIDFromBytes(getString.getBytes());
     }
 
@@ -93,7 +93,7 @@ public interface UuidUtil {
      * @param getString 字符串
      * @return UUID字符串
      */
-    static String makeStringUuidFromString(@NotNull String getString) {
+    public static String makeStringUuidFromString(@NotNull String getString) {
         return UUID.nameUUIDFromBytes(getString.getBytes()).toString();
     }
 
@@ -108,7 +108,7 @@ public interface UuidUtil {
      * @return UUID字符串
      */
     @NotNull
-    static String makeUuidFromStringNoDash(@NotNull String getString) {
+    public static String makeUuidFromStringNoDash(@NotNull String getString) {
         return UUID.nameUUIDFromBytes(getString.getBytes()).toString().replace("-", "");
     }
 }

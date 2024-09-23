@@ -10,5 +10,5 @@ package com.xlf.utility.util;
  * @since v1.0.1
  */
 @SuppressWarnings("unused")
-public interface BaseUtil {
+public class BaseUtil {
 }

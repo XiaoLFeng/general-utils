@@ -2,10 +2,9 @@ package com.xlf.utility.util;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.apache.logging.log4j.LogManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -27,12 +26,9 @@ import java.util.Map;
  * @since v1.0.1
  */
 @SuppressWarnings("unused")
-public interface ConvertUtil {
+public class ConvertUtil {
 
-    /**
-     * 日志记录器
-     */
-    Logger log = LoggerFactory.getLogger(ConvertUtil.class);
+    private static final org.apache.logging.log4j.Logger LOG = LogManager.getLogger(ConvertUtil.class);
 
     /**
      * 将对象转换为 Map
@@ -43,7 +39,7 @@ public interface ConvertUtil {
      * @return Map
      */
     @NotNull
-    static Map<String, Object> convertObjectToMap(@NotNull Object obj) {
+    public static Map<String, Object> convertObjectToMap(@NotNull Object obj) {
         String getJson = new Gson().toJson(obj);
         return new Gson().fromJson(getJson, new TypeToken<HashMap<String, Object>>() {
         }.getType());
@@ -58,7 +54,7 @@ public interface ConvertUtil {
      * @return Map
      */
     @NotNull
-    static Map<String, String> convertObjectToMapString(@NotNull Object obj) {
+    public static Map<String, String> convertObjectToMapString(@NotNull Object obj) {
         String getJson = new Gson().toJson(obj);
         return new Gson().fromJson(getJson, new TypeToken<Map<String, String>>() {
         }.getType());
@@ -73,7 +69,7 @@ public interface ConvertUtil {
      * @return Map
      */
     @NotNull
-    static Map<Object, Object> convertObjectToMapObject(@NotNull Object obj) {
+    public static Map<Object, Object> convertObjectToMapObject(@NotNull Object obj) {
         String getJson = new Gson().toJson(obj);
         return new Gson().fromJson(getJson, new TypeToken<Map<Object, Object>>() {
         }.getType());
@@ -90,7 +86,7 @@ public interface ConvertUtil {
      * @return 对象
      */
     @Nullable
-    static <T> T convertMapToObject(Map<Object, Object> map, @NotNull Class<T> clazz) {
+    public static <T> T convertMapToObject(Map<Object, Object> map, @NotNull Class<T> clazz) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         if (map == null) {
@@ -180,7 +176,7 @@ public interface ConvertUtil {
                 }
             }
         } catch (Exception e) {
-            log.error("[UTIL] Convert map to object error: {}", e.getMessage());
+            LOG.error("[UTIL] Convert map to object error: {}", e.getMessage());
         }
         return obj;
     }
