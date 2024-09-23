@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -21,13 +22,10 @@ public class HeaderUtil {
 
     /**
      * 获取授权用户UUID
-     * <hr/>
+     * <p>
      * 用于获取授权用户UUID, 用于权限验证
      * <p>
-     * 1. 从请求头中获取授权用户UUID
-     * 2. 处理 Bearer Token
-     * 3. 返回授权用户UUID
-     * 4. 如果获取失败, 返回默认UUID
+     * 从请求头中获取授权用户UUID，处理 Bearer Token，返回授权用户UUID，如果获取失败, 返回默认UUID。
      *
      * @param request 请求
      * @return UUID
@@ -47,5 +45,50 @@ public class HeaderUtil {
             }
             return null;
         }
+    }
+
+    /**
+     * 获取授权用户UUID字符串
+     * <p>
+     * 用于获取授权用户UUID, 用于权限验证。
+     * <p>
+     * 从请求头中获取授权用户UUID，处理 Bearer Token，返回授权用户UUID，如果获取失败, 返回默认UUID，返回UUID字符串。
+     *
+     * @param request 请求
+     * @return UUID
+     */
+    @Nullable
+    public static String getAuthorizeUserUuidString(@NotNull HttpServletRequest request) {
+        if (getAuthorizeUserUuid(request) != null) {
+            return Objects.requireNonNull(getAuthorizeUserUuid(request)).toString();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 获取请求头中的Referer
+     * <p>
+     * 用于获取请求头中的Referer，若有Referer则返回Referer，否则返回null。
+     *
+     * @param request 请求
+     * @return Referer
+     */
+    @Nullable
+    public static String getReferer(@NotNull HttpServletRequest request) {
+        return request.getHeader("Referer");
+    }
+
+
+    /**
+     * 判断请求头中是否有Referer
+     * <p>
+     * 用于判断请求头中是否有Referer，若有Referer则返回true，否则返回false。
+     *
+     * @param request 请求
+     * @return 是否有Referer
+     */
+    public static boolean hasReferer(@NotNull HttpServletRequest request) {
+        return request.getHeader("Referer") != null;
     }
 }
