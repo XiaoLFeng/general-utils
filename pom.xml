@@ -6,7 +6,7 @@
 
     <groupId>com.x-lf.utility</groupId>
     <artifactId>general-utils</artifactId>
-    <version>1.0.9</version>
+    <version>1.1.1</version>
     <description>筱锋通用公共仓库</description>
     <url>https://github.com/XiaoLFeng/general-utils</url>
 
@@ -97,12 +97,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- Google Gson -->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.10.1</version>
-        </dependency>
 
         <!-- JUnit -->
         <dependency>
@@ -110,6 +104,13 @@
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.8.2</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- HuTool -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.26</version>
         </dependency>
 
         <!-- MyBatis-Plus -->
