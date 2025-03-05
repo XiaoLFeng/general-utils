@@ -6,7 +6,7 @@
 
     <groupId>com.x-lf.utility</groupId>
     <artifactId>general-utils</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2-beta1</version>
     <description>筱锋通用公共仓库</description>
     <url>https://github.com/XiaoLFeng/general-utils</url>
 

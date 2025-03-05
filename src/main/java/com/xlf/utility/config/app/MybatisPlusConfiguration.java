@@ -46,7 +46,7 @@ public class MybatisPlusConfiguration {
         MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
         PaginationInnerInterceptor pageConfig = new PaginationInnerInterceptor();
 
-        pageConfig.setMaxLimit(20L);
+        pageConfig.setMaxLimit(200L);
         pageConfig.setDbType(properties.getDbType());
 
         mybatisPlusInterceptor.addInnerInterceptor(pageConfig);
