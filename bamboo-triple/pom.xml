@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.x-lf.utility</groupId>
+        <artifactId>general-utils</artifactId>
+        <version>2.0.0-beta1</version>
+    </parent>
+
+    <artifactId>bamboo-triple</artifactId>
+    <packaging>jar</packaging>
+    <name>bamboo-triple</name>
+    <description>竹子 Triple 协议支持模块 - Dubbo Triple 协议增强</description>
+
+    <dependencies>
+        <!-- 依赖 bamboo-base -->
+        <dependency>
+            <groupId>com.x-lf.utility</groupId>
+            <artifactId>bamboo-base</artifactId>
+        </dependency>
+
+        <!-- 依赖 bamboo-mvc (ContextHolder) -->
+        <dependency>
+            <groupId>com.x-lf.utility</groupId>
+            <artifactId>bamboo-mvc</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- Dubbo (provided) -->
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Slf4j API (provided) -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Lombok (provided) -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Spring AOP (provided - 用于 @Aspect, @Around) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- AspectJ (provided - 用于 ProceedingJoinPoint) -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Spring Web (provided - 用于 @Ordered) -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
