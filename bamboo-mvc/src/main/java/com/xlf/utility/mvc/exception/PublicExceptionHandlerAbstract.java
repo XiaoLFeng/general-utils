@@ -2,9 +2,10 @@ package com.xlf.utility.mvc.exception;
 
 import com.xlf.utility.BaseResponse;
 import com.xlf.utility.ErrorCode;
-import com.xlf.utility.ResultUtil;
+import com.xlf.utility.mvc.ResultUtil;
 import com.xlf.utility.exception.BusinessException;
 import com.xlf.utility.exception.library.*;
+import com.xlf.utility.mvc.exception.library.UserAuthenticationException;
 import com.xlf.utility.mvc.exception.SpringbootSystemExceptionHandler;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;

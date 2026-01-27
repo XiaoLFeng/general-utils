@@ -16,6 +16,7 @@
         <module>bamboo-mvc</module>
         <module>bamboo-triple</module>
         <module>bamboo-notify</module>
+        <module>bamboo-webflux</module>
     </modules>
 
     <developers>
@@ -54,6 +55,8 @@
         <tomcat.version>11.0.2</tomcat.version>
         <junit.version>5.8.2</junit.version>
         <jetbrains-annotations.version>24.1.0</jetbrains-annotations.version>
+        <mysql.version>9.4.0</mysql.version>
+        <uuid-creator.version>6.1.1</uuid-creator.version>
     </properties>
 
     <dependencyManagement>
@@ -77,6 +80,11 @@
             <dependency>
                 <groupId>com.x-lf.utility</groupId>
                 <artifactId>bamboo-notify</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.x-lf.utility</groupId>
+                <artifactId>bamboo-webflux</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -145,6 +153,20 @@
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-api</artifactId>
                 <version>${junit.version}</version>
+            </dependency>
+
+            <!-- MySQL Driver -->
+            <dependency>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+
+            <!-- UUID Creator -->
+            <dependency>
+                <groupId>com.github.f4b6a3</groupId>
+                <artifactId>uuid-creator</artifactId>
+                <version>${uuid-creator.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -1,5 +1,6 @@
-package com.xlf.utility.utility;
+package com.xlf.utility.mvc.utility;
 
+import com.xlf.utility.utility.UuidUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

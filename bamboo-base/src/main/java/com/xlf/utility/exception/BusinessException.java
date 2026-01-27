@@ -1,17 +1,21 @@
 package com.xlf.utility.exception;
 
 import com.xlf.utility.ErrorCode;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * 自定义业务异常类，用于处理业务中的特定业务异常。
+ * 自定义业务异常类，用于表示程序中与业务逻辑相关的异常情况。
  * <p>
- * 该异常类继承自 {@link RuntimeException}，并包含了错误消息、错误代码、可选的数据对象以及错误输出标识。
- * 可以通过多种构造函数初始化，以适应不同的异常处理需求。
+ * 此类继承自 {@code RuntimeException}，用于在程序运行期间抛出非受检异常，主要用于描述特定业务场景中的错误。
+ * 可以携带详细的错误消息、错误代码、附加数据以及错误输出标识，使错误更易于诊断和处理。
  *
- * @since v1.0.9-beta.1.0
- * @version v1.0.9-beta.1.0
  * @author xiao_lfeng
+ * @version v2.0.0-beta1
+ * @since v2.0.0-beta1
  */
+@Slf4j
+@Getter
 @SuppressWarnings("unused")
 public class BusinessException extends RuntimeException {
 
@@ -49,12 +53,14 @@ public class BusinessException extends RuntimeException {
         this.errorCode = errorCode;
         this.data = data;
         this.errorOutput = errorOutput;
+        log.warn(
+                "业务异常 | 错误代码: {}, 错误消息: {}, 附加数据: {}, 错误输出标识: {}",
+                errorCode, errorMessage, data, errorOutput
+        );
     }
 
     /**
      * 构造函数，初始化错误消息和错误代码。
-     * <p>
-     * 默认情况下，附加数据为 {@code null}，且不输出详细错误信息。
      *
      * @param message   异常的错误消息
      * @param errorCode 异常的错误代码
@@ -65,8 +71,6 @@ public class BusinessException extends RuntimeException {
 
     /**
      * 构造函数，初始化错误消息、错误代码以及附加数据。
-     * <p>
-     * 默认情况下，不输出详细错误信息。
      *
      * @param message   异常的错误消息
      * @param errorCode 异常的错误代码
@@ -78,8 +82,6 @@ public class BusinessException extends RuntimeException {
 
     /**
      * 构造函数，初始化错误消息、错误代码，并指定是否输出详细的错误信息。
-     * <p>
-     * 默认情况下，附加数据为 {@code null}。
      *
      * @param message     异常的错误消息
      * @param errorCode   异常的错误代码
@@ -87,41 +89,5 @@ public class BusinessException extends RuntimeException {
      */
     public BusinessException(String message, ErrorCode errorCode, boolean errorOutput) {
         this(message, errorCode, null, errorOutput);
-    }
-
-    /**
-     * 获取错误消息。
-     *
-     * @return 返回异常的错误消息
-     */
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    /**
-     * 获取错误代码。
-     *
-     * @return 返回异常的错误代码
-     */
-    public ErrorCode getErrorCode() {
-        return errorCode;
-    }
-
-    /**
-     * 获取附加数据。
-     *
-     * @return 返回与异常相关的附加数据，可能为 {@code null}
-     */
-    public Object getData() {
-        return data;
-    }
-
-    /**
-     * 获取错误输出标识。
-     *
-     * @return {@code true} 表示需要输出详细的错误信息，{@code false} 表示不输出详细信息
-     */
-    public boolean isErrorOutput() {
-        return errorOutput;
     }
 }

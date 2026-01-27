@@ -24,15 +24,32 @@ public class PageNotFoundedException extends RuntimeException {
     private final String message;
 
     /**
+     * 是否包含堆栈跟踪信息
+     */
+    private final boolean hasTrace;
+
+    /**
+     * 构造函数，初始化页面未找到异常的所有属性。
+     *
+     * @param message  异常的错误消息
+     * @param route    页面路由
+     * @param hasTrace 是否包含堆栈跟踪信息
+     */
+    public PageNotFoundedException(String message, String route, boolean hasTrace) {
+        super(message);
+        this.message = message;
+        this.route = route;
+        this.hasTrace = hasTrace;
+    }
+
+    /**
      * 构造函数，初始化页面未找到异常的所有属性。
      *
      * @param message 异常的错误消息
      * @param route   页面路由
      */
     public PageNotFoundedException(String message, String route) {
-        super(message);
-        this.message = message;
-        this.route = route;
+        this(message, route, false);
     }
 
     /**
@@ -61,5 +78,14 @@ public class PageNotFoundedException extends RuntimeException {
      */
     public String getRoute() {
         return route;
+    }
+
+    /**
+     * 判断是否包含堆栈跟踪信息。
+     *
+     * @return 如果包含堆栈跟踪信息则返回 true，否则返回 false
+     */
+    public boolean isHasTrace() {
+        return hasTrace;
     }
 }

@@ -1,4 +1,4 @@
-package com.xlf.utility.exception.library;
+package com.xlf.utility.mvc.exception.library;
 
 import com.xlf.utility.ErrorCode;
 import jakarta.servlet.http.HttpServletRequest;

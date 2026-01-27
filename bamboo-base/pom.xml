@@ -51,20 +51,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Spring Web (provided - 用于 ResponseEntity) -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Spring Web MVC (provided - 用于 @ExceptionHandler) -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
         <!-- Jackson Annotations (provided - 用于 @JsonInclude) -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -72,10 +58,24 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Servlet API (provided - 用于 HttpServletRequest) -->
+        <!-- Jackson Databind (provided - 用于 RequestException 解析) -->
         <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Spring JDBC (provided - 初始化/迁移工具) -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Spring TX (provided - 事务模板) -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
             <scope>provided</scope>
         </dependency>
 
@@ -83,6 +83,33 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Dubbo (provided - RpcException) -->
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- MySQL Driver (provided - MysqlDataTruncation) -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- UUID Creator (用于 UUID v7) -->
+        <dependency>
+            <groupId>com.github.f4b6a3</groupId>
+            <artifactId>uuid-creator</artifactId>
+        </dependency>
+
+        <!-- Logback (provided - MethodTypeConverter) -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
             <scope>provided</scope>
         </dependency>
 

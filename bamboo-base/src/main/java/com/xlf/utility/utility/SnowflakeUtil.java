@@ -45,11 +45,11 @@ import java.time.ZoneId;
  *
  * <h2>配置说明</h2>
  * <p>
- * 工具类从配置文件 {@code application-awaken-snowflake.yml} 读取以下配置：
+ * 工具类从配置文件 {@code application-utility-snowflake.yml} 读取以下配置：
  * <ul>
- *     <li>{@code awaken.base.snowflake.datacenter-id}: 数据中心ID（默认1）</li>
- *     <li>{@code awaken.base.snowflake.machine-id}: 机器ID（默认1）</li>
- *     <li>{@code awaken.base.snowflake.epoch}: 起始时间戳（默认2024-01-01）</li>
+ *     <li>{@code utility.base.snowflake.datacenter-id}: 数据中心ID（默认1）</li>
+ *     <li>{@code utility.base.snowflake.machine-id}: 机器ID（默认1）</li>
+ *     <li>{@code utility.base.snowflake.epoch}: 起始时间戳（默认2024-01-01）</li>
  * </ul>
  * </p>
  *
@@ -286,7 +286,7 @@ public final class SnowflakeUtil {
 
         return SnowflakeInfoDTO.builder()
                 .id(id)
-                .timestamp(timestamp - getGenerator().getEpoch())  // 相对时间戳
+                .timestamp(timestamp - getGenerator().getEpoch())
                 .datacenterId(datacenterId)
                 .machineId(machineId)
                 .sequence(sequence)

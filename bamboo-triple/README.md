@@ -4,6 +4,10 @@
 
 本模块提供 Dubbo Triple 协议的统一请求响应封装，适用于所有基于 Dubbo Triple 协议的 RPC 服务。
 
+### 使用方式
+引入 `bamboo-triple` 后会自动扫描模块内的组件与切面（如 `TripleRequestCheckAspect`）。
+若项目仅引入 `bamboo-mvc`，不会默认包含 Triple 功能，需要显式依赖 `bamboo-triple`。
+
 ## 模块结构
 
 ```

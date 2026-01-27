@@ -1,7 +1,7 @@
 package com.xlf.utility.mvc.filter;
 
 import com.xlf.utility.ErrorCode;
-import com.xlf.utility.ResultUtil;
+import com.xlf.utility.mvc.ResultUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

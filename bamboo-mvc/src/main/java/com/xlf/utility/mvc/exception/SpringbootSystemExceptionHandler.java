@@ -2,7 +2,7 @@ package com.xlf.utility.mvc.exception;
 
 import com.xlf.utility.BaseResponse;
 import com.xlf.utility.ErrorCode;
-import com.xlf.utility.ResultUtil;
+import com.xlf.utility.mvc.ResultUtil;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
