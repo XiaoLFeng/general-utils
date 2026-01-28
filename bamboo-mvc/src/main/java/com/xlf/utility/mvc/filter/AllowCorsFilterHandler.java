@@ -56,7 +56,7 @@ public class AllowCorsFilterHandler extends OncePerRequestFilter {
         log.debug("过滤器 AllowCorsFilter 执行「处理跨域请求」");
 
         String host = request.getHeader("Host");
-        if (host != null && isAllowedOrigin(host)) {
+        if (host != null && this.isAllowedOrigin(host)) {
             response.setHeader(HttpHeaderConstant.ACCESS_CONTROL_ALLOW_ORIGIN, host);
             this.setCorsHeaders(response);
         } else {

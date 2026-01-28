@@ -52,28 +52,28 @@ public class DebugAspectHandler implements IDebugAspect {
             log.debug("DebugController 被调用，正在检查MVC运行环境");
 
             // 记录HTTP请求详细信息
-            logHttpRequestInfo(request);
+            this.logHttpRequestInfo(request);
 
             if (log.isDebugEnabled()) {
                 log.debug("当前运行环境为开发模式，允许 DebugController 的调用");
                 log.debug("\t\t地址: [{}]{}", request.getMethod(), request.getServletPath());
-                log.debug("\t\t客户端IP: {}", getClientIpAddress(request));
+                log.debug("\t\t客户端IP: {}", this.getClientIpAddress(request));
 
                 String userAgent = request.getHeader("User-Agent");
                 if (userAgent != null && !userAgent.isEmpty()) {
-                    log.debug("\t\tUser-Agent: {}", userAgent.length() > 100 ?
-                            userAgent.substring(0, 100) + "..." : userAgent);
+                    log.debug("\t\tUser-Agent: {}", userAgent.length() > 100
+                            ? userAgent.substring(0, 100) + "..." : userAgent);
                 }
             } else {
                 log.warn("DebugController 在非开发环境中被调用");
                 log.warn("\t\t请求: [{}]{}", request.getMethod(), request.getServletPath());
-                log.warn("\t\t客户端IP: {}", getClientIpAddress(request));
+                log.warn("\t\t客户端IP: {}", this.getClientIpAddress(request));
                 throw new BusinessException("非 Debug 环境禁止调用该接口内容", ErrorCode.UNAUTHORIZED);
             }
         } else {
             // 回退到基础版本
             log.debug("无法获取HTTP请求上下文，使用基础检查逻辑");
-            performBasicDebugCheck();
+            this.performBasicDebugCheck();
         }
     }
 

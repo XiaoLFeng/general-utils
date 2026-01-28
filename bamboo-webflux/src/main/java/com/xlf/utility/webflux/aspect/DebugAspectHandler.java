@@ -71,7 +71,7 @@ public class DebugAspectHandler implements IDebugAspect {
             log.debug("ReactiveDebugController 被调用，正在检查WebFlux运行环境");
 
             // 记录ServerWebExchange详细信息
-            logServerWebExchangeInfo(exchange);
+            this.logServerWebExchangeInfo(exchange);
 
             if (log.isDebugEnabled()) {
                 log.debug("当前运行环境为开发模式，允许 ReactiveDebugController 的调用");
@@ -117,7 +117,7 @@ public class DebugAspectHandler implements IDebugAspect {
             String method = exchange.getRequest().getMethod().name();
             String path = exchange.getRequest().getPath().pathWithinApplication().value();
             String queryString = exchange.getRequest().getURI().getQuery();
-            String remoteAddress = getClientIpAddress(exchange);
+            String remoteAddress = this.getClientIpAddress(exchange);
 
             StringBuilder logMessage = new StringBuilder();
             logMessage.append(String.format("Debug请求详情 - %s %s", method, path));
@@ -129,7 +129,8 @@ public class DebugAspectHandler implements IDebugAspect {
             logMessage.append(String.format(" | 客户端IP: %s", remoteAddress));
 
             // 检查外部trace ID
-            String externalTraceId = getExternalTraceId(exchange);
+            // 检查外部trace ID
+            String externalTraceId = this.getExternalTraceId(exchange);
             if (externalTraceId != null) {
                 logMessage.append(String.format(" | 外部TraceID: %s", externalTraceId));
             }
@@ -139,8 +140,8 @@ public class DebugAspectHandler implements IDebugAspect {
             // 记录User-Agent信息
             String userAgent = exchange.getRequest().getHeaders().getFirst("User-Agent");
             if (userAgent != null && !userAgent.isEmpty()) {
-                log.debug("User-Agent: {}", userAgent.length() > 100 ?
-                        userAgent.substring(0, 100) + "..." : userAgent);
+                log.debug("User-Agent: {}", userAgent.length() > 100
+                        ? userAgent.substring(0, 100) + "..." : userAgent);
             }
 
         } catch (Exception e) {

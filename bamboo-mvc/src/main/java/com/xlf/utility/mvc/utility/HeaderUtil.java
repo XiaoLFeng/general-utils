@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -33,19 +33,17 @@ public class HeaderUtil {
      */
     @Nullable
     public static UUID getAuthorizeUserUuid(@NotNull HttpServletRequest request) {
-        String userUuid = request.getHeader("Authorization");
-        // 处理 Bearer Token
-        if (userUuid != null && userUuid.startsWith("Bearer ")) {
-            userUuid = userUuid.substring(7);
-            return UuidUtil.convertToUuid(userUuid);
-        } else {
-            if (userUuid != null) {
-                if (Pattern.matches("^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$", userUuid)) {
-                    return UuidUtil.convertToUuid(userUuid);
-                }
-            }
-            return null;
-        }
+        return Optional.ofNullable(request.getHeader("Authorization"))
+                .map(authHeader -> {
+                    // 处理 Bearer Token
+                    if (authHeader.startsWith("Bearer ")) {
+                        return authHeader.substring(7);
+                    }
+                    return authHeader;
+                })
+                .filter(token -> Pattern.matches("^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$", token))
+                .map(UuidUtil::convertToUuid)
+                .orElse(null);
     }
 
     /**
@@ -60,11 +58,9 @@ public class HeaderUtil {
      */
     @Nullable
     public static String getAuthorizeUserUuidString(@NotNull HttpServletRequest request) {
-        if (getAuthorizeUserUuid(request) != null) {
-            return Objects.requireNonNull(getAuthorizeUserUuid(request)).toString();
-        } else {
-            return null;
-        }
+        return Optional.ofNullable(getAuthorizeUserUuid(request))
+                .map(UUID::toString)
+                .orElse(null);
     }
 
     /**

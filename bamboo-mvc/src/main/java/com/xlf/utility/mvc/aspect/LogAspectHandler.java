@@ -87,10 +87,10 @@ public class LogAspectHandler implements ILogAspect {
         }
 
         // 显示调试数据
-        showDebugData(joinPoint);
+        this.showDebugData(joinPoint);
 
         // 格式化并输出请求参数信息（DEBUG级别）
-        logFormattedRequestParams(request, joinPoint);
+        this.logFormattedRequestParams(request, joinPoint);
 
         return joinPoint.proceed();
     }
@@ -108,7 +108,7 @@ public class LogAspectHandler implements ILogAspect {
         }
 
         // 显示调试数据
-        showDebugData(joinPoint);
+        this.showDebugData(joinPoint);
         return joinPoint.proceed();
     }
 
@@ -128,7 +128,7 @@ public class LogAspectHandler implements ILogAspect {
         }
 
         // 显示调试数据
-        showDebugData(pjp);
+        this.showDebugData(pjp);
 
         try {
             Object result = pjp.proceed();

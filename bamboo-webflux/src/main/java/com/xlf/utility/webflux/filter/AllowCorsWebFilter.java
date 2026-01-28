@@ -58,7 +58,9 @@ public class AllowCorsWebFilter implements WebFilter {
         ServerHttpResponse response = exchange.getResponse();
 
         String host = request.getHeaders().getFirst("Host");
-        if (host != null && isAllowedOrigin(host)) {
+        if (Optional.ofNullable(host)
+                .filter(this::isAllowedOrigin)
+                .isPresent()) {
             response.getHeaders().set(HttpHeaderConstant.ACCESS_CONTROL_ALLOW_ORIGIN, host);
             this.setCorsHeaders(response);
         } else {

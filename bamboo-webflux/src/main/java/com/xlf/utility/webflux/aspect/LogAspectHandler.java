@@ -83,14 +83,14 @@ public class LogAspectHandler implements ILogAspect {
             }
 
             // 格式化并输出请求参数信息（DEBUG级别）
-            logFormattedRequestParams(exchange, joinPoint);
+            this.logFormattedRequestParams(exchange, joinPoint);
         } else {
             // 回退到基础版本
             log.info("控制器调用 - 方法: {}", joinPoint.getSignature().toShortString());
         }
 
         // 显示调试数据
-        showDebugData(joinPoint);
+        this.showDebugData(joinPoint);
         return joinPoint.proceed();
     }
 
@@ -113,7 +113,7 @@ public class LogAspectHandler implements ILogAspect {
         }
 
         // 显示调试数据
-        showDebugData(joinPoint);
+        this.showDebugData(joinPoint);
         return joinPoint.proceed();
     }
 
@@ -138,19 +138,19 @@ public class LogAspectHandler implements ILogAspect {
         }
 
         // 显示调试数据
-        showDebugData(pjp);
+        this.showDebugData(pjp);
 
         try {
             Object result = pjp.proceed();
 
             // 如果是响应式结果，需要特殊处理
             if (result instanceof Mono<?> mono) {
-                return handleMonoResult(mono, pjp, startTime);
+                return this.handleMonoResult(mono, pjp, startTime);
             } else if (result instanceof Flux<?> flux) {
-                return handleFluxResult(flux, pjp, startTime);
+                return this.handleFluxResult(flux, pjp, startTime);
             } else {
                 // 非响应式结果的常规处理
-                return handleNonReactiveResult(result, pjp, startTime);
+                return this.handleNonReactiveResult(result, pjp, startTime);
             }
 
         } catch (Throwable throwable) {
