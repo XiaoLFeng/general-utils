@@ -19,10 +19,26 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 /**
- * Bamboo MVC 自动配置类
+ * Base SDK 自动配置类。
+ * <p>
+ * 该配置类用于集成基础 SDK 的核心功能，包括切面编程、MyBatis-Plus 拦截器、上下文管理过滤器、日志处理以及 Dubbo 上下文传递。
+ * 通过 {@code @ComponentScan} 自动扫描 {@code com.xlf.utility.mvc} 包下的组件。
+ * </p>
+ * <p>
+ * 主要配置功能如下：
+ * </p>
+ * <ul>
+ *     <li>启用 AspectJ 自动代理支持。</li>
+ *     <li>绑定 MVC 上下文管理配置属性 ({@code utility.context.mvc})。</li>
+ *     <li>自动配置 MyBatis-Plus 分页拦截器和 ID 生成器（基于 {@code utility.base} 配置）。</li>
+ *     <li>注册上下文过滤器，用于管理请求上下文及 UUID 传递。</li>
+ *     <li>注册日志、调试及错误处理的切面与控制器。</li>
+ *     <li>集成 Dubbo RPC 上下文传递切面。</li>
+ * </ul>
  *
  * @author xiao_lfeng
- * @since 2.0.0-beta1
+ * @version v2.0.0-beta1
+ * @since v2.0.0-beta1
  */
 @Configuration
 @EnableAspectJAutoProxy

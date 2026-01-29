@@ -1,9 +1,13 @@
 package com.xlf.utility.app.init;
 
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.xlf.utility.app.properties.UtilityBaseProperties;
 import com.xlf.utility.dao.MigrateHandlerDAO;
 import com.xlf.utility.dao.TableHandlerDAO;
 import com.xlf.utility.models.entity.MigrateDO;
-import com.xlf.utility.models.entity.TableDO;
+import com.xlf.utility.models.entity.sql.BaseTableDO;
+import com.xlf.utility.strategy.SqlDialectStrategy;
+import com.xlf.utility.strategy.SqlDialectStrategyFactory;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -28,7 +32,7 @@ import java.util.regex.Pattern;
  * @since v2.0.0-beta1
  */
 @SuppressWarnings("unused")
-public abstract class InitPrepareAlgorithmHandler {
+public abstract class InitPrepareAlgorithmHandler<T extends BaseTableDO> {
     private static final Logger log = LoggerFactory.getLogger(InitPrepareAlgorithmHandler.class);
 
     /**
@@ -37,27 +41,35 @@ public abstract class InitPrepareAlgorithmHandler {
     private static final Pattern MIGRATE_FILE_PATTERN = Pattern.compile("^\\d{4}_\\d{2}_\\d{2}_\\d{2}_\\d{2}_\\w+\\.sql$");
 
     private final JdbcTemplate jdbcTemplate;
-    private final TableHandlerDAO tableDAO;
+    private final TableHandlerDAO<T> tableDAO;
     private final MigrateHandlerDAO migrateDAO;
     private final TransactionTemplate transactionTemplate;
+    private final SqlDialectStrategyFactory strategyFactory;
+    private final DbType dbType;
 
     @Contract(pure = true)
     public InitPrepareAlgorithmHandler(
             JdbcTemplate jdbcTemplate,
-            TableHandlerDAO tableDAO,
+            TableHandlerDAO<T> tableDAO,
             MigrateHandlerDAO migrateDAO,
-            TransactionTemplate transactionTemplate
+            TransactionTemplate transactionTemplate,
+            SqlDialectStrategyFactory strategyFactory,
+            UtilityBaseProperties properties
     ) {
         this.jdbcTemplate = jdbcTemplate;
         this.tableDAO = tableDAO;
         this.migrateDAO = migrateDAO;
         this.transactionTemplate = transactionTemplate;
+        this.strategyFactory = strategyFactory;
+        this.dbType = properties.getDatasource() != null
+                ? properties.getDatasource().getDbType()
+                : DbType.MYSQL;
     }
 
     public final void checkTable(String schema, String tableName) {
-        TableDO tableDO = tableDAO.lambdaQuery()
-                .eq(schema != null, TableDO::getTableSchema, schema)
-                .eq(TableDO::getTableName, tableName)
+        T tableDO = tableDAO.lambdaQuery()
+                .eq(schema != null, BaseTableDO::getTableSchema, schema)
+                .eq(BaseTableDO::getTableName, tableName)
                 .one();
 
         if (tableDO == null) {
@@ -98,24 +110,15 @@ public abstract class InitPrepareAlgorithmHandler {
     }
 
     protected final void checkMigrateTable(String schema) {
-        TableDO tableDO = tableDAO.lambdaQuery()
-                .eq(schema != null, TableDO::getTableSchema, schema)
-                .eq(TableDO::getTableName, "awaken_migrate")
+        SqlDialectStrategy strategy = strategyFactory.getStrategy(dbType);
+
+        T tableDO = tableDAO.lambdaQuery()
+                .eq(schema != null, BaseTableDO::getTableSchema, schema)
+                .eq(BaseTableDO::getTableName, "awaken_migrate")
                 .one();
 
         if (tableDO == null) {
-            String sqlString = """
-                    CREATE TABLE IF NOT EXISTS `awaken_migrate`
-                    (
-                        migrate_id     BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '主键',
-                        migrate_name   VARCHAR(255)    NOT NULL UNIQUE COMMENT '迁移文件名',
-                        migrate_hash   VARCHAR(64)     NOT NULL COMMENT '文件 SHA-256 哈希值',
-                        migrate_status VARCHAR(20)     NOT NULL DEFAULT 'SUCCESS' COMMENT '迁移状态：SUCCESS/FAILED/ROLLBACK',
-                        error_message  TEXT                     DEFAULT NULL COMMENT '错误信息',
-                        applied_at     DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '应用时间'
-                    ) ENGINE = InnoDB
-                      DEFAULT CHARSET = utf8mb4 COMMENT ='迁移记录表';
-                    """;
+            String sqlString = strategy.getCreateMigrateTableSql();
 
             try {
                 transactionTemplate.execute(status -> {
@@ -145,7 +148,7 @@ public abstract class InitPrepareAlgorithmHandler {
             return;
         }
 
-        String fileHash = calculateSha256(sqlContent);
+        String fileHash = this.calculateSha256(sqlContent);
 
         MigrateDO existingMigrate = migrateDAO.lambdaQuery()
                 .eq(MigrateDO::getMigrateName, fileName)

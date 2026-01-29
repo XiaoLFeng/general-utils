@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * 配置类：UtilityBaseProperties
  * <p>
  * 该配置类用于加载通用基础属性，主要用于定义数据库类型以及分页相关的配置信息。
- * 配置通过读取以 "utility.base" 为前缀的属性来加载，并为开发者提供可配置选项。
+ * 配置通过读取以 "bamboo.base" 为前缀的属性来加载，并为开发者提供可配置选项。
  *
  * <p>
  * 属性结构为：
@@ -26,7 +26,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @since v2.0.0-beta1
  */
 @Data
-@ConfigurationProperties(prefix = "utility.base")
+@ConfigurationProperties(prefix = "bamboo.base")
 public class UtilityBaseProperties {
     /**
      * 数据源配置
@@ -94,9 +94,9 @@ public class UtilityBaseProperties {
         /**
          * 起始时间戳（Epoch）
          * <p>
-         * 默认值: 1729440000000 (2024-10-21 00:00:00 UTC+8)
+         * 默认值: 1690214400000 (2023-07-25 00:00:00 UTC)
          * </p>
          */
-        private Long epoch = 1729440000000L;
+        private Long epoch = 1690214400000L;
     }
 }

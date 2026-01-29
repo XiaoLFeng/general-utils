@@ -1,7 +1,7 @@
 package com.xlf.utility.utility;
 
 import com.xlf.utility.incrementer.SnowflakeIdGenerator;
-import com.xlf.utility.models.entity.dto.SnowflakeInfoDTO;
+import com.xlf.utility.models.dto.SnowflakeInfoDTO;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

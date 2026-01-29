@@ -1,4 +1,4 @@
-package com.xlf.utility.models.entity.dto;
+package com.xlf.utility.models.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

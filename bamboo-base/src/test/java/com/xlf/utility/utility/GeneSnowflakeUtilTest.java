@@ -1,6 +1,6 @@
 package com.xlf.utility.utility;
 
-import com.xlf.utility.models.entity.dto.GeneSnowflakeInfoDTO;
+import com.xlf.utility.models.dto.GeneSnowflakeInfoDTO;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
