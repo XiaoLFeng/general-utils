@@ -1,9 +1,13 @@
 package com.xlf.utility.app.auto;
 
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.xlf.utility.app.properties.UtilityBaseProperties;
 import com.xlf.utility.dao.MigrateHandlerDAO;
-import com.xlf.utility.dao.TableHandlerDAO;
+import com.xlf.utility.dao.MysqlTableHandlerDAO;
+import com.xlf.utility.dao.PostgresTableHandlerDAO;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,8 +27,22 @@ import org.springframework.context.annotation.Configuration;
 public class CoreDatabaseAutoConfiguration {
 
     @Bean
-    public TableHandlerDAO tableHandlerDAO() {
-        return new TableHandlerDAO();
+    @ConditionalOnProperty(
+            name = "utility.base.datasource.db-type",
+            havingValue = "mysql",
+            matchIfMissing = true
+    )
+    public MysqlTableHandlerDAO mysqlTableHandlerDAO() {
+        return new MysqlTableHandlerDAO();
+    }
+
+    @Bean
+    @ConditionalOnProperty(
+            name = "utility.base.datasource.db-type",
+            havingValue = "postgresql"
+    )
+    public PostgresTableHandlerDAO postgresTableHandlerDAO() {
+        return new PostgresTableHandlerDAO();
     }
 
     @Bean

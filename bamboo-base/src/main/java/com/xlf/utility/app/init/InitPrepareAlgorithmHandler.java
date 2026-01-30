@@ -3,9 +3,7 @@ package com.xlf.utility.app.init;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.xlf.utility.app.properties.UtilityBaseProperties;
 import com.xlf.utility.dao.MigrateHandlerDAO;
-import com.xlf.utility.dao.TableHandlerDAO;
 import com.xlf.utility.models.entity.MigrateDO;
-import com.xlf.utility.models.entity.sql.BaseTableDO;
 import com.xlf.utility.strategy.SqlDialectStrategy;
 import com.xlf.utility.strategy.SqlDialectStrategyFactory;
 import org.jetbrains.annotations.Contract;
@@ -22,6 +20,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Date;
 import java.util.HexFormat;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
  * @since v2.0.0-beta1
  */
 @SuppressWarnings("unused")
-public abstract class InitPrepareAlgorithmHandler<T extends BaseTableDO> {
+public abstract class InitPrepareAlgorithmHandler {
     private static final Logger log = LoggerFactory.getLogger(InitPrepareAlgorithmHandler.class);
 
     /**
@@ -41,7 +41,6 @@ public abstract class InitPrepareAlgorithmHandler<T extends BaseTableDO> {
     private static final Pattern MIGRATE_FILE_PATTERN = Pattern.compile("^\\d{4}_\\d{2}_\\d{2}_\\d{2}_\\d{2}_\\w+\\.sql$");
 
     private final JdbcTemplate jdbcTemplate;
-    private final TableHandlerDAO<T> tableDAO;
     private final MigrateHandlerDAO migrateDAO;
     private final TransactionTemplate transactionTemplate;
     private final SqlDialectStrategyFactory strategyFactory;
@@ -50,14 +49,12 @@ public abstract class InitPrepareAlgorithmHandler<T extends BaseTableDO> {
     @Contract(pure = true)
     public InitPrepareAlgorithmHandler(
             JdbcTemplate jdbcTemplate,
-            TableHandlerDAO<T> tableDAO,
             MigrateHandlerDAO migrateDAO,
             TransactionTemplate transactionTemplate,
             SqlDialectStrategyFactory strategyFactory,
             UtilityBaseProperties properties
     ) {
         this.jdbcTemplate = jdbcTemplate;
-        this.tableDAO = tableDAO;
         this.migrateDAO = migrateDAO;
         this.transactionTemplate = transactionTemplate;
         this.strategyFactory = strategyFactory;
@@ -67,12 +64,9 @@ public abstract class InitPrepareAlgorithmHandler<T extends BaseTableDO> {
     }
 
     public final void checkTable(String schema, String tableName) {
-        T tableDO = tableDAO.lambdaQuery()
-                .eq(schema != null, BaseTableDO::getTableSchema, schema)
-                .eq(BaseTableDO::getTableName, tableName)
-                .one();
+        boolean tableExists = this.checkTableExists(schema, tableName);
 
-        if (tableDO == null) {
+        if (!tableExists) {
             ClassPathResource classPathResource = new ClassPathResource("/database/" + tableName + ".sql");
             try {
                 String getSql = FileCopyUtils.copyToString(new InputStreamReader(classPathResource.getInputStream(), StandardCharsets.UTF_8));
@@ -112,12 +106,9 @@ public abstract class InitPrepareAlgorithmHandler<T extends BaseTableDO> {
     protected final void checkMigrateTable(String schema) {
         SqlDialectStrategy strategy = strategyFactory.getStrategy(dbType);
 
-        T tableDO = tableDAO.lambdaQuery()
-                .eq(schema != null, BaseTableDO::getTableSchema, schema)
-                .eq(BaseTableDO::getTableName, "awaken_migrate")
-                .one();
+        boolean tableExists = this.checkTableExists(schema, "awaken_migrate");
 
-        if (tableDO == null) {
+        if (!tableExists) {
             String sqlString = strategy.getCreateMigrateTableSql();
 
             try {
@@ -220,6 +211,45 @@ public abstract class InitPrepareAlgorithmHandler<T extends BaseTableDO> {
         } catch (Exception e) {
             log.error("计算SHA-256失败 | {}", e.getMessage(), e);
             return "";
+        }
+    }
+
+    /**
+     * 使用 JdbcTemplate 直接查询 information_schema 检查表是否存在
+     *
+     * @param schema    数据库 schema，为 null 时使用当前数据库
+     * @param tableName 表名
+     * @return 表是否存在
+     */
+    private boolean checkTableExists(String schema, String tableName) {
+        String sql;
+        List<Map<String, Object>> result;
+        switch (dbType) {
+            case MYSQL, MARIADB -> {
+                if (schema != null) {
+                    sql = "SELECT 1 FROM information_schema.TABLES " +
+                          "WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? LIMIT 1";
+                    result = jdbcTemplate.queryForList(sql, schema, tableName);
+                } else {
+                    sql = "SELECT 1 FROM information_schema.TABLES " +
+                          "WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ? LIMIT 1";
+                    result = jdbcTemplate.queryForList(sql, tableName);
+                }
+                return !result.isEmpty();
+            }
+            case POSTGRE_SQL -> {
+                if (schema != null) {
+                    sql = "SELECT 1 FROM information_schema.tables " +
+                          "WHERE table_schema = ? AND table_name = ? LIMIT 1";
+                    result = jdbcTemplate.queryForList(sql, schema, tableName);
+                } else {
+                    sql = "SELECT 1 FROM information_schema.tables " +
+                          "WHERE table_schema = CURRENT_SCHEMA() AND table_name = ? LIMIT 1";
+                    result = jdbcTemplate.queryForList(sql, tableName);
+                }
+                return !result.isEmpty();
+            }
+            default -> throw new RuntimeException("不支持的数据库类型: " + dbType);
         }
     }
 }
