@@ -29,5 +29,7 @@ public final class MigrateDO {
     private String migrateHash;
     private String migrateStatus;
     private String errorMessage;
+    private Integer lastExecutedLine;
+    private Integer totalLines;
     private Date appliedAt;
 }

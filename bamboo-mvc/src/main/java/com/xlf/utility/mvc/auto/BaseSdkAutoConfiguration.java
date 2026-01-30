@@ -3,7 +3,6 @@ package com.xlf.utility.mvc.auto;
 import com.xlf.utility.app.config.MybatisPlusConfigHandler;
 import com.xlf.utility.app.properties.UtilityBaseProperties;
 import com.xlf.utility.mvc.aspect.DebugAspectHandler;
-import com.xlf.utility.mvc.aspect.DubboContextAspect;
 import com.xlf.utility.mvc.aspect.LogAspectHandler;
 import com.xlf.utility.mvc.controller.ErrorController;
 import com.xlf.utility.mvc.filter.ContextFilter;
@@ -74,12 +73,5 @@ public class BaseSdkAutoConfiguration {
     @Bean
     public ErrorController errorController() {
         return new ErrorController();
-    }
-
-    @Bean
-    @ConditionalOnClass(name = "org.apache.dubbo.rpc.RpcContext")
-    @ConditionalOnMissingBean
-    public DubboContextAspect dubboContextAspect() {
-        return new DubboContextAspect();
     }
 }

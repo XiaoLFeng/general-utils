@@ -35,4 +35,13 @@ public interface SqlDialectStrategy {
      * @return 表实体类 Class 对象
      */
     Class<? extends BaseTableDO> getTableClass();
+
+    /**
+     * 获取检查表是否存在的 SQL 语句
+     *
+     * @param schema    数据库 schema，为 null 时使用当前数据库
+     * @param tableName 表名
+     * @return 检查表存在的 SQL 语句
+     */
+    String getCheckTableExistsSql(String schema, String tableName);
 }

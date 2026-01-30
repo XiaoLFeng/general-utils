@@ -1,4 +1,4 @@
-package com.xlf.utility.mvc.annotations;
+package com.xlf.utility.triple.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

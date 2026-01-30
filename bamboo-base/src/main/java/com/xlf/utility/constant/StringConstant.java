@@ -17,7 +17,7 @@ public class StringConstant {
     /**
      * 系统作者信息
      */
-    public static final String SYSTEM_COMPANY = "FengUtil";
+    public static final String SYSTEM_COMPANY = "GeneralUtils";
     /**
      * 系统版本信息
      */

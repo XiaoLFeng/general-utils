@@ -141,10 +141,26 @@ public abstract class InitPrepareAlgorithmHandler {
 
         String fileHash = this.calculateSha256(sqlContent);
 
+        // 解析 SQL 语句
+        String processedSql = sqlContent.replaceAll("(?s)/\\*.*?\\*/", "");
+        processedSql = processedSql.replaceAll("--.*", "");
+        String[] statements = processedSql.split(";");
+        List<String> validStatements = java.util.Arrays.stream(statements)
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
+
+        if (validStatements.isEmpty()) {
+            log.warn("迁移文件为空 | {}", fileName);
+            return;
+        }
+
+        // 检查是否存在部分执行的记录
         MigrateDO existingMigrate = migrateDAO.lambdaQuery()
                 .eq(MigrateDO::getMigrateName, fileName)
                 .one();
 
+        int startLine = 0;
         if (existingMigrate != null) {
             if (!fileHash.equals(existingMigrate.getMigrateHash())) {
                 log.error("迁移文件已被修改！文件：{}", fileName);
@@ -153,54 +169,41 @@ public abstract class InitPrepareAlgorithmHandler {
                 log.error("已执行的迁移文件不应被修改，系统将终止启动！");
                 System.exit(1);
             }
-            log.debug("迁移 {} 已执行，跳过。", fileName);
-            return;
-        }
-
-        log.info("开始执行迁移 | {}", fileName);
-        try {
-            Boolean success = transactionTemplate.execute(status -> {
-                try {
-                    String processedSql = sqlContent.replaceAll("(?s)/\\*.*?\\*/", "");
-                    processedSql = processedSql.replaceAll("--.*", "");
-
-                    for (String sql : processedSql.split(";")) {
-                        String trimmedSql = sql.trim();
-                        if (!trimmedSql.isEmpty()) {
-                            jdbcTemplate.execute(trimmedSql);
-                        }
-                    }
-
-                    MigrateDO migrate = new MigrateDO()
-                            .setMigrateName(fileName)
-                            .setMigrateHash(fileHash)
-                            .setMigrateStatus("SUCCESS")
-                            .setAppliedAt(new Date());
-                    migrateDAO.save(migrate);
-
-                    return true;
-                } catch (Exception e) {
-                    log.error("执行迁移失败，正在回滚 | {}", e.getMessage(), e);
-                    status.setRollbackOnly();
-
-                    MigrateDO migrate = new MigrateDO()
-                            .setMigrateName(fileName)
-                            .setMigrateHash(fileHash)
-                            .setMigrateStatus("FAILED")
-                            .setErrorMessage(e.getMessage())
-                            .setAppliedAt(new Date());
-                    migrateDAO.save(migrate);
-                    throw new RuntimeException("执行迁移失败：" + fileName, e);
-                }
-            });
-
-            if (success != null && success) {
-                log.info("迁移执行成功 | {}", fileName);
+            if ("SUCCESS".equals(existingMigrate.getMigrateStatus())) {
+                log.debug("迁移 {} 已成功执行，跳过。", fileName);
+                return;
             }
-        } catch (Exception e) {
-            log.error("迁移执行失败 | {}", e.getMessage(), e);
-            System.exit(1);
+            if ("PARTIAL".equals(existingMigrate.getMigrateStatus())) {
+                startLine = existingMigrate.getLastExecutedLine() + 1;
+                log.info("迁移 {} 部分执行，从第 {} 条语句继续", fileName, startLine + 1);
+            }
         }
+
+        // 执行迁移
+        log.info("开始执行迁移 | {} | 共 {} 条语句", fileName, validStatements.size());
+        MigrateDO migrate = existingMigrate != null ? existingMigrate : new MigrateDO()
+                .setMigrateName(fileName)
+                .setMigrateHash(fileHash)
+                .setTotalLines(validStatements.size());
+
+        for (int i = startLine; i < validStatements.size(); i++) {
+            String sql = validStatements.get(i);
+            try {
+                jdbcTemplate.execute(sql);
+                migrate.setLastExecutedLine(i)
+                        .setMigrateStatus("PARTIAL")
+                        .setAppliedAt(new Date());
+                migrateDAO.saveOrUpdate(migrate);
+            } catch (Exception e) {
+                log.error("执行迁移失败 | {} | 第 {} 条语句 | {}", fileName, i + 1, e.getMessage(), e);
+                throw new RuntimeException("执行迁移失败：" + fileName + "，第 " + (i + 1) + " 条语句", e);
+            }
+        }
+
+        // 全部成功
+        migrate.setMigrateStatus("SUCCESS");
+        migrateDAO.saveOrUpdate(migrate);
+        log.info("迁移执行成功 | {}", fileName);
     }
 
     private String calculateSha256(@NotNull String content) {
@@ -215,41 +218,16 @@ public abstract class InitPrepareAlgorithmHandler {
     }
 
     /**
-     * 使用 JdbcTemplate 直接查询 information_schema 检查表是否存在
+     * 使用策略模式检查表是否存在
      *
      * @param schema    数据库 schema，为 null 时使用当前数据库
      * @param tableName 表名
      * @return 表是否存在
      */
     private boolean checkTableExists(String schema, String tableName) {
-        String sql;
-        List<Map<String, Object>> result;
-        switch (dbType) {
-            case MYSQL, MARIADB -> {
-                if (schema != null) {
-                    sql = "SELECT 1 FROM information_schema.TABLES " +
-                          "WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? LIMIT 1";
-                    result = jdbcTemplate.queryForList(sql, schema, tableName);
-                } else {
-                    sql = "SELECT 1 FROM information_schema.TABLES " +
-                          "WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ? LIMIT 1";
-                    result = jdbcTemplate.queryForList(sql, tableName);
-                }
-                return !result.isEmpty();
-            }
-            case POSTGRE_SQL -> {
-                if (schema != null) {
-                    sql = "SELECT 1 FROM information_schema.tables " +
-                          "WHERE table_schema = ? AND table_name = ? LIMIT 1";
-                    result = jdbcTemplate.queryForList(sql, schema, tableName);
-                } else {
-                    sql = "SELECT 1 FROM information_schema.tables " +
-                          "WHERE table_schema = CURRENT_SCHEMA() AND table_name = ? LIMIT 1";
-                    result = jdbcTemplate.queryForList(sql, tableName);
-                }
-                return !result.isEmpty();
-            }
-            default -> throw new RuntimeException("不支持的数据库类型: " + dbType);
-        }
+        SqlDialectStrategy strategy = strategyFactory.getStrategy(dbType);
+        String sql = strategy.getCheckTableExistsSql(schema, tableName);
+        List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
+        return !result.isEmpty();
     }
 }

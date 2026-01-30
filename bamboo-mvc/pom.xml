@@ -57,13 +57,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Dubbo (provided - 用于 RPC 异常处理) -->
-        <dependency>
-            <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo-spring-boot-starter</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
         <!-- MySQL Driver (provided - 用于 MySQL 异常处理) -->
         <dependency>
             <groupId>com.mysql</groupId>

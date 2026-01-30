@@ -1,14 +1,12 @@
-package com.xlf.utility.mvc.exception.extend;
+package com.xlf.utility.triple.exception;
 
-import com.xlf.utility.BaseResponse;
 import com.xlf.utility.ErrorCode;
 import com.xlf.utility.exception.IDubboException;
-import com.xlf.utility.mvc.ResultUtil;
+import com.xlf.utility.triple.TripleResponse;
+import com.xlf.utility.triple.TripleResult;
 import org.apache.dubbo.rpc.RpcException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
  * Dubbo异常处理类
@@ -40,9 +38,8 @@ public class DubboException implements IDubboException {
     private static final Logger log = LoggerFactory.getLogger(DubboException.class);
 
     @Override
-    @ExceptionHandler(RpcException.class)
-    public ResponseEntity<BaseResponse<Void>> handleRpcException(RpcException exception) {
+    public TripleResponse<Void> handleRpcException(RpcException exception) {
         log.error("RPC 异常 | [{}]{} ", exception.getCode(), exception.getMessage(), exception);
-        return ResultUtil.error(ErrorCode.SERVER_INTERNAL_ERROR, exception.getMessage(), null);
+        return TripleResult.error(ErrorCode.SERVER_INTERNAL_ERROR, exception.getMessage(), null);
     }
 }

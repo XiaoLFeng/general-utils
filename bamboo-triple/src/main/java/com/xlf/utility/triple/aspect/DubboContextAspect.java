@@ -1,7 +1,7 @@
-package com.xlf.utility.mvc.aspect;
+package com.xlf.utility.triple.aspect;
 
-import com.xlf.utility.mvc.annotations.DubboPersistentContext;
 import com.xlf.utility.mvc.holder.ContextHolder;
+import com.xlf.utility.triple.annotations.DubboPersistentContext;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -31,19 +31,19 @@ import java.lang.reflect.Method;
 @SuppressWarnings("unused")
 public class DubboContextAspect {
 
-    @Around("@within(com.xlf.utility.mvc.annotations.DubboPersistentContext) " +
-            "|| @annotation(com.xlf.utility.mvc.annotations.DubboPersistentContext)")
+    @Around("@within(com.xlf.utility.triple.annotations.DubboPersistentContext) " +
+            "|| @annotation(com.xlf.utility.triple.annotations.DubboPersistentContext)")
     public Object aroundDubboMethod(@NotNull ProceedingJoinPoint joinPoint) throws Throwable {
-        String contextId = extractContextIdFromArguments(joinPoint);
+        String contextId = this.extractContextIdFromArguments(joinPoint);
         if (contextId == null) {
-            log.debug("Dubbo方法未找到上下文参数，直接执行 - 方法: {}", getMethodName(joinPoint));
+            log.debug("Dubbo方法未找到上下文参数，直接执行 - 方法: {}", this.getMethodName(joinPoint));
             return joinPoint.proceed();
         }
         try {
             ContextHolder.initContext(contextId);
             MDC.put("CONTEXT_ID", contextId);
             if (log.isDebugEnabled()) {
-                log.debug("Dubbo调用上下文已设置 - 方法: {}, 上下文: {}", getMethodName(joinPoint), contextId);
+                log.debug("Dubbo调用上下文已设置 - 方法: {}, 上下文: {}", this.getMethodName(joinPoint), contextId);
             }
             return joinPoint.proceed();
         } finally {
@@ -55,7 +55,7 @@ public class DubboContextAspect {
     private @Nullable String extractContextIdFromArguments(@NotNull ProceedingJoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
         if (args.length == 0) {
-            log.warn("Dubbo方法缺少参数，无法提取上下文ID - 方法: {}", getMethodName(joinPoint));
+            log.warn("Dubbo方法缺少参数，无法提取上下文ID - 方法: {}", this.getMethodName(joinPoint));
             return null;
         }
 
@@ -76,7 +76,7 @@ public class DubboContextAspect {
             }
         }
 
-        log.warn("Dubbo方法未找到可提取上下文ID的参数 - 方法: {}", getMethodName(joinPoint));
+        log.warn("Dubbo方法未找到可提取上下文ID的参数 - 方法: {}", this.getMethodName(joinPoint));
         return null;
     }
 
