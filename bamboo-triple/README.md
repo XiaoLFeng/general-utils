@@ -165,7 +165,7 @@ if (response.getSuccess()) {
 1. **包名调整**：从 `com.awaken.base.sdk.mvc.triple.*` 调整为 `com.xlf.utility.triple.*`
 2. **依赖调整**：
    - ErrorCode 从 `com.awaken.base.ErrorCode` 调整为 `com.xlf.utility.ErrorCode`
-   - BusinessException 从 `com.awaken.base.app.exception.BusinessException` 调整为 `com.xlf.utility.exception.BusinessException`
+   - BusinessException 从 `com.awaken.base.app.exception.BusinessException` 调整为 `com.xlf.utility.exception.library.BusinessException`
    - ContextHolder 从 `com.awaken.base.sdk.mvc.holder.ContextHolder` 调整为 `com.xlf.utility.mvc.holder.ContextHolder`
 3. **版本号处理**：移除了 StringConstant.SYSTEM_VERSION 依赖，使用固定版本号 "1.0.0"
 4. **代码规范**：遵循用户的代码规范，调用内部方法时使用 `this.` 前缀

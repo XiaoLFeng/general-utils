@@ -1,7 +1,7 @@
 package com.xlf.utility.triple.aspect;
 
 import com.xlf.utility.ErrorCode;
-import com.xlf.utility.exception.BusinessException;
+import com.xlf.utility.exception.library.BusinessException;
 import com.xlf.utility.triple.TripleRequest;
 import com.xlf.utility.triple.annotations.TripleRequestCheck;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,6 @@
 package com.xlf.utility.triple.exception;
 
 import com.xlf.utility.ErrorCode;
-import com.xlf.utility.exception.IDubboException;
 import com.xlf.utility.triple.TripleResponse;
 import com.xlf.utility.triple.TripleResult;
 import org.apache.dubbo.rpc.RpcException;
@@ -34,10 +33,30 @@ import org.slf4j.LoggerFactory;
  * @since v2.0.0-beta1
  */
 @SuppressWarnings("unused")
-public class DubboException implements IDubboException {
+public class DubboException {
     private static final Logger log = LoggerFactory.getLogger(DubboException.class);
 
-    @Override
+    /**
+     * 处理 Dubbo RPC 调用异常
+     * <p>
+     * 该方法用于捕获和处理 Dubbo 服务调用过程中产生的 {@code RpcException} 异常。
+     * 它会记录异常的详细日志（包含错误码和消息），并将其转换为统一的 {@code TripleResponse}
+     * 错误响应对象，以保证 API 返回格式的一致性。默认返回服务器内部错误状态码。
+     * <p>
+     * 内部处理流程：
+     * <ul>
+     * <li>记录 ERROR 级别日志，包含异常码、信息及堆栈。</li>
+     * <li>调用 {@code TripleResult.error} 生成标准错误响应。</li>
+     * </ul>
+     * <p>
+     * NOTICE:
+     * 该方法直接使用异常消息作为返回消息，请注意确保不包含敏感信息。
+     * <p>
+     * 捕获的 RPC 异常对象，包含错误码和详细信息
+     *
+     * @return 返回包装后的错误响应对象 {@link TripleResponse}，状态码为
+     * {@code ErrorCode.SERVER_INTERNAL_ERROR}，数据体为 {@code null}
+     */
     public TripleResponse<Void> handleRpcException(RpcException exception) {
         log.error("RPC 异常 | [{}]{} ", exception.getCode(), exception.getMessage(), exception);
         return TripleResult.error(ErrorCode.SERVER_INTERNAL_ERROR, exception.getMessage(), null);

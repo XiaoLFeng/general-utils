@@ -1,4 +1,4 @@
-package com.xlf.utility.exception;
+package com.xlf.utility.exception.library;
 
 import com.xlf.utility.ErrorCode;
 import lombok.Getter;

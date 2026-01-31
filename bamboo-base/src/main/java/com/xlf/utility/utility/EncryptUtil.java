@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.xlf.utility.ErrorCode;
 import com.xlf.utility.constant.StringConstant;
-import com.xlf.utility.exception.BusinessException;
+import com.xlf.utility.exception.library.BusinessException;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

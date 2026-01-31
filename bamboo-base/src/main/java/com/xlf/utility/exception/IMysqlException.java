@@ -8,9 +8,6 @@ import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
  * {@code IMysqlException} 是一个用于规范化处理 MySQL 数据库特有异常的接口。
  * 它继承自 {@code ISqlException}，在通用 SQL 异常处理的基础上，
  * 定义了 MySQL 特有的异常处理方法，如数据截断异常等。
- * <p>
- * 实现类应通过 {@link org.springframework.web.bind.annotation.ExceptionHandler} 注解
- * 来捕获并处理相应的异常，并返回标准化的错误响应结构。
  *
  * @author xiao_lfeng
  * @version v2.0.0-beta1

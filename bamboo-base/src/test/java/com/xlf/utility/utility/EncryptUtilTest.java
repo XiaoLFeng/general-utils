@@ -1,7 +1,7 @@
 package com.xlf.utility.utility;
 
 import com.xlf.utility.ErrorCode;
-import com.xlf.utility.exception.BusinessException;
+import com.xlf.utility.exception.library.BusinessException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

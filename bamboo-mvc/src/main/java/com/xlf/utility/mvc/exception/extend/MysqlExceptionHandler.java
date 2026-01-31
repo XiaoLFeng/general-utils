@@ -39,14 +39,14 @@ public class MysqlExceptionHandler implements IMysqlException {
 
     @Override
     @ExceptionHandler(SQLSyntaxErrorException.class)
-    public ResponseEntity<BaseResponse<Void>> handleSQLSyntaxErrorException(@NotNull SQLSyntaxErrorException e) {
+    public ResponseEntity<BaseResponse<Void>> handleSqlSyntaxErrorException(@NotNull SQLSyntaxErrorException e) {
         log.error("SQL语法错误 | {}", e.getMessage(), e);
         return ResultUtil.error(ErrorCode.DATABASE_ERROR, e.getMessage(), null);
     }
 
     @Override
     @ExceptionHandler(SQLException.class)
-    public ResponseEntity<BaseResponse<Void>> handleSQLException(@NotNull SQLException e) {
+    public ResponseEntity<BaseResponse<Void>> handleSqlException(@NotNull SQLException e) {
         log.error("SQL错误 | {}", e.getMessage(), e);
         return ResultUtil.error(ErrorCode.DATABASE_ERROR, e.getMessage(), null);
     }

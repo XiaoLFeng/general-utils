@@ -1,5 +1,6 @@
 package com.xlf.utility.exception;
 
+import com.xlf.utility.exception.library.BusinessException;
 import com.xlf.utility.exception.library.RequestException;
 import org.jetbrains.annotations.NotNull;
 

@@ -1,7 +1,7 @@
 package com.xlf.utility.incrementer;
 
 import com.xlf.utility.ErrorCode;
-import com.xlf.utility.exception.BusinessException;
+import com.xlf.utility.exception.library.BusinessException;
 import com.xlf.utility.models.dto.SnowflakeInfoDTO;
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import lombok.Getter;

@@ -20,7 +20,7 @@ import java.sql.SQLSyntaxErrorException;
  * @since v2.0.0-beta1
  */
 @SuppressWarnings("unused")
-public interface ISqlException extends IDatabaseException {
+public interface ISqlException{
 
     /**
      * 处理 SQL 语法错误异常
@@ -31,8 +31,7 @@ public interface ISqlException extends IDatabaseException {
      * @param e SQL 语法错误异常对象
      * @return 标准化的异常响应
      */
-    @Override
-    Object handleSQLSyntaxErrorException(@NotNull SQLSyntaxErrorException e);
+    Object handleSqlSyntaxErrorException(@NotNull SQLSyntaxErrorException e);
 
     /**
      * 处理通用 SQL 异常
@@ -43,6 +42,5 @@ public interface ISqlException extends IDatabaseException {
      * @param e SQL 异常对象
      * @return 标准化的异常响应
      */
-    @Override
-    Object handleSQLException(@NotNull SQLException e);
+    Object handleSqlException(@NotNull SQLException e);
 }

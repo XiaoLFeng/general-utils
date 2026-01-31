@@ -2,7 +2,7 @@ package com.xlf.utility.webflux.exception;
 
 import com.xlf.utility.BaseResponse;
 import com.xlf.utility.ErrorCode;
-import com.xlf.utility.exception.BusinessException;
+import com.xlf.utility.exception.library.BusinessException;
 import com.xlf.utility.exception.IPublicException;
 import com.xlf.utility.exception.library.*;
 import com.xlf.utility.webflux.ResultUtil;

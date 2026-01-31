@@ -2,7 +2,7 @@ package com.xlf.utility.webflux.aspect;
 
 import com.xlf.utility.ErrorCode;
 import com.xlf.utility.app.aspect.IDebugAspect;
-import com.xlf.utility.exception.BusinessException;
+import com.xlf.utility.exception.library.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.server.ServerWebExchange;

@@ -11,9 +11,6 @@ import java.sql.DataTruncation;
  * {@code IPostgreSqlException} 是一个用于规范化处理 PostgreSQL 数据库特有异常的接口。
  * 它继承自 {@code ISqlException}，在通用 SQL 异常处理的基础上，
  * 定义了 PostgreSQL 特有的异常处理方法，如 PSQL 异常和数据截断异常等。
- * <p>
- * 实现类应通过 {@link org.springframework.web.bind.annotation.ExceptionHandler} 注解
- * 来捕获并处理相应的异常，并返回标准化的错误响应结构。
  *
  * @author xiao_lfeng
  * @version v2.0.0-beta1
@@ -31,7 +28,7 @@ public interface IPostgreSqlException extends ISqlException {
      * @param e PSQL 异常对象
      * @return 标准化的异常响应
      */
-    Object handlePSQLException(@NotNull PSQLException e);
+    Object handlePostgreSqlException(@NotNull PSQLException e);
 
     /**
      * 处理 PostgreSQL 数据截断异常

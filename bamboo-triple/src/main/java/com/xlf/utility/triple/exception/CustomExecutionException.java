@@ -1,7 +1,6 @@
 package com.xlf.utility.triple.exception;
 
 import com.xlf.utility.ErrorCode;
-import com.xlf.utility.exception.IExecutionException;
 import com.xlf.utility.triple.TripleResponse;
 import com.xlf.utility.triple.TripleResult;
 import org.apache.dubbo.rpc.StatusRpcException;
@@ -21,7 +20,7 @@ import java.util.concurrent.ExecutionException;
  * @since v2.0.0-beta1
  */
 @SuppressWarnings("unused")
-public class CustomExecutionException implements IExecutionException {
+public class CustomExecutionException {
     private static final Logger log = LoggerFactory.getLogger(CustomExecutionException.class);
 
     /**
@@ -32,7 +31,6 @@ public class CustomExecutionException implements IExecutionException {
      * @param exception ExecutionException 实例
      * @return TripleResponse 响应对象
      */
-    @Override
     public TripleResponse<Void> handleRpcException(@NotNull ExecutionException exception) {
         if (exception.getCause() != null) {
             if (exception.getCause() instanceof StatusRpcException rpcException) {

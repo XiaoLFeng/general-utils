@@ -1,4 +1,4 @@
-package com.xlf.utility.mvc.auto;
+package com.xlf.utility.mvc;
 
 import com.xlf.utility.app.config.MybatisPlusConfigHandler;
 import com.xlf.utility.app.properties.UtilityBaseProperties;
