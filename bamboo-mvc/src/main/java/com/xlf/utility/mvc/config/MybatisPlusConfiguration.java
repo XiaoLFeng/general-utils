@@ -1,8 +1,10 @@
-package com.xlf.utility.mvc.config.app;
+package com.xlf.utility.mvc.config;
 
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import com.xlf.utility.mvc.config.UtilProperties;
+import com.xlf.utility.app.properties.UtilityBaseProperties;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,18 +25,13 @@ import org.springframework.context.annotation.Configuration;
  * }
  * </pre>
  *
- * @version 1.0.9-beta.1.0
- * @since 1.0.9-beta.1.0
  * @author xiao_lfeng
+ * @version 2.0.0-beta1
+ * @since 1.0.9-beta.1.0
  */
 @SuppressWarnings("unused")
 @Configuration
 public class MybatisPlusConfiguration {
-    private final UtilProperties properties;
-
-    public MybatisPlusConfiguration(UtilProperties properties) {
-        this.properties = properties;
-    }
 
     /**
      * 配置 Mybatis Plus 分页操作
@@ -42,14 +39,13 @@ public class MybatisPlusConfiguration {
      * @return MybatisPlusInterceptor
      */
     @Bean
-    public MybatisPlusInterceptor mybatisPlusInterceptor() {
-        MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
-        PaginationInnerInterceptor pageConfig = new PaginationInnerInterceptor();
-
-        pageConfig.setMaxLimit(200L);
-        pageConfig.setDbType(properties.getDbType());
-
-        mybatisPlusInterceptor.addInnerInterceptor(pageConfig);
-        return mybatisPlusInterceptor;
+    public MybatisPlusInterceptor mybatisPlusInterceptor(@NotNull UtilityBaseProperties properties) {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        PaginationInnerInterceptor pageInterceptor = new PaginationInnerInterceptor();
+        if (ObjectUtils.isNotEmpty(properties.getDatasource().getDbType())) {
+            pageInterceptor.setDbType(properties.getDatasource().getDbType());
+        }
+        interceptor.addInnerInterceptor(pageInterceptor);
+        return interceptor;
     }
 }

@@ -9,14 +9,14 @@ import java.util.List;
 /**
  * MVC 上下文管理配置属性
  * <p>
- * 配置前缀：utility.context.mvc
+ * 配置前缀：bamboo.context
  *
  * @author xiao_lfeng
  * @version v2.0.0-beta1
  * @since v2.0.0-beta1
  */
 @Data
-@ConfigurationProperties(prefix = "utility.context.mvc")
+@ConfigurationProperties(prefix = "bamboo.context")
 public class ContextProperties {
 
     /**
