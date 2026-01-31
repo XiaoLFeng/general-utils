@@ -64,6 +64,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- PostgreSQL Driver (provided - 用于 PostgreSQL 异常处理) -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- MyBatis-Plus Boot Starter (provided) -->
         <dependency>
             <groupId>com.baomidou</groupId>

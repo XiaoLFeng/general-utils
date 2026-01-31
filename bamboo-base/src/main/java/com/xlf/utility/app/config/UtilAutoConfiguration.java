@@ -1,4 +1,4 @@
-package com.xlf.utility.config;
+package com.xlf.utility.app.config;
 
 import com.xlf.utility.app.auto.BaseCoreAutoConfiguration;
 import com.xlf.utility.app.auto.CoreDatabaseAutoConfiguration;

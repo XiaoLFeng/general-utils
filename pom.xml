@@ -47,7 +47,7 @@
 
         <!-- Dependency Versions -->
         <spring-boot.version>3.5.10</spring-boot.version>
-        <hutool.version>5.8.38</hutool.version>
+        <hutool.version>5.8.43</hutool.version>
         <mybatis-plus.version>3.5.15</mybatis-plus.version>
         <jbcrypt.version>0.4</jbcrypt.version>
         <dubbo.version>3.3.0</dubbo.version>
@@ -62,6 +62,7 @@
     </properties>
 
     <dependencies>
+        <!-- Springboot 配置文件处理器 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
@@ -70,9 +71,11 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Jetbrains Annotations -->
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
+            <version>${jetbrains-annotations.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
@@ -127,8 +130,10 @@
             <!-- HuTool -->
             <dependency>
                 <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
+                <artifactId>hutool-bom</artifactId>
                 <version>${hutool.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
             <!-- BCrypt -->
@@ -157,13 +162,6 @@
                 <groupId>org.apache.tomcat.embed</groupId>
                 <artifactId>tomcat-embed-core</artifactId>
                 <version>${tomcat.version}</version>
-            </dependency>
-
-            <!-- Jetbrains Annotations -->
-            <dependency>
-                <groupId>org.jetbrains</groupId>
-                <artifactId>annotations</artifactId>
-                <version>${jetbrains-annotations.version}</version>
             </dependency>
 
             <!-- JUnit -->

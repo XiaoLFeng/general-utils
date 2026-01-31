@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS `awaken_migrate`
+(
+    MigrateId     BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '主键',
+    MigrateName   VARCHAR(255)    NOT NULL UNIQUE COMMENT '迁移文件名',
+    MigrateHash   VARCHAR(64)     NOT NULL COMMENT '文件 SHA-256 哈希值',
+    MigrateStatus VARCHAR(20)     NOT NULL DEFAULT 'SUCCESS' COMMENT '迁移状态：SUCCESS/FAILED/ROLLBACK',
+    ErrorMessage  TEXT                     DEFAULT NULL COMMENT '错误信息',
+    AppliedAt     DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '应用时间'
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT ='迁移记录表';
+
+

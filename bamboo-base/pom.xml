@@ -19,7 +19,17 @@
         <!-- HuTool (provided - 用户项目提供) -->
         <dependency>
             <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
+            <artifactId>hutool-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-json</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-crypto</artifactId>
             <scope>provided</scope>
         </dependency>
 
@@ -102,6 +112,13 @@
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- PostgreSQL Driver (provided - PostgresDataTruncation, PSQLException) -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
             <scope>provided</scope>
         </dependency>
 
