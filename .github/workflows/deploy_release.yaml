@@ -1,26 +1,39 @@
 name: 构建和发布版本
 
 on:
-  push:
-    tags:
-      - 'v*'  # 推送 v 开头的 TAG 时触发
+  release:
+    types: [released]  # 发布 Release 时触发（非 draft/prerelease）
 
 jobs:
-  build-and-release:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
+
       - name: 设置 JDK
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: 使用 Maven 构建
-        run: mvn clean package
-      - name: 创建 GitHub Release
-        run: |
-          RELEASE_TAG="${{ github.ref_name }}"
-          gh release create "$RELEASE_TAG" target/*.jar -t "$RELEASE_TAG" -n "版本 $RELEASE_TAG"
+          server-id: ossrh
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+
+      - name: 配置 GPG 签名
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+
+      - name: 发布到 Maven 中央仓库
+        run: mvn clean deploy -P release -DskipTests
         env:
-          GITHUB_TOKEN: ${{ secrets.MYGITHUBTOKEN }}
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+
+      - name: 上传构建产物到 Release
+        run: |
+          RELEASE_TAG="${{ github.event.release.tag_name }}"
+          gh release upload "$RELEASE_TAG" target/*.jar --clobber
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
