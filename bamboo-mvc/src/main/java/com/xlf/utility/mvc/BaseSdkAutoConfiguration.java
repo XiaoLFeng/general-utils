@@ -4,18 +4,19 @@ import com.xlf.utility.app.config.MybatisPlusConfigHandler;
 import com.xlf.utility.app.properties.UtilityBaseProperties;
 import com.xlf.utility.mvc.aspect.DebugAspectHandler;
 import com.xlf.utility.mvc.aspect.LogAspectHandler;
-import com.xlf.utility.mvc.controller.ErrorController;
+import com.xlf.utility.mvc.controller.GlobalErrorController;
 import com.xlf.utility.mvc.exception.SystemExceptionHandler;
 import com.xlf.utility.mvc.filter.ContextFilter;
 import com.xlf.utility.mvc.properties.ContextProperties;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 /**
@@ -40,7 +41,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
  * @version v2.0.0-beta1
  * @since v2.0.0-beta1
  */
-@Configuration
+@AutoConfiguration(before = ErrorMvcAutoConfiguration.class)
 @EnableAspectJAutoProxy
 @EnableConfigurationProperties(ContextProperties.class)
 public class BaseSdkAutoConfiguration {
@@ -71,8 +72,9 @@ public class BaseSdkAutoConfiguration {
     }
 
     @Bean
-    public ErrorController errorController() {
-        return new ErrorController();
+    @ConditionalOnMissingBean
+    public GlobalErrorController globalErrorController() {
+        return new GlobalErrorController();
     }
 
     @Bean

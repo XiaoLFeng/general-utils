@@ -4,15 +4,16 @@ import com.xlf.utility.app.config.MybatisPlusConfigHandler;
 import com.xlf.utility.app.properties.UtilityBaseProperties;
 import com.xlf.utility.webflux.aspect.DebugAspectHandler;
 import com.xlf.utility.webflux.aspect.LogAspectHandler;
-import com.xlf.utility.webflux.controller.ErrorController;
+import com.xlf.utility.webflux.controller.GlobalErrorController;
 import com.xlf.utility.webflux.filter.ContextFilter;
 import com.xlf.utility.webflux.properties.ContextWebFluxProperties;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.autoconfigure.web.reactive.error.ErrorWebFluxAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
@@ -22,7 +23,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * @version v2.0.0-beta1
  * @since v2.0.0-beta1
  */
-@Configuration
+@AutoConfiguration(before = ErrorWebFluxAutoConfiguration.class)
 @EnableAspectJAutoProxy
 @EnableConfigurationProperties(ContextWebFluxProperties.class)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
@@ -57,7 +58,8 @@ public class WebFluxSdkAutoConfiguration {
     }
 
     @Bean
-    public ErrorController errorController() {
-        return new ErrorController();
+    @ConditionalOnMissingBean
+    public GlobalErrorController globalErrorController() {
+        return new GlobalErrorController();
     }
 }
