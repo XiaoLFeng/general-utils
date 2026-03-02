@@ -8,11 +8,13 @@ import org.slf4j.LoggerFactory;
 /**
  * 邮件通知服务实现（占位）
  * <p>
- * 提供基于邮件的通知功能。
+ * 提供基于邮件的通知功能。当前为实验性实现，所有方法均为占位，
+ * 将在后续版本中完善具体逻辑。
  * </p>
  *
  * @author xiao_lfeng
  * @since 2.0.0-beta1
+ * @apiNote 实验性模块（WIP），API 可能在未来版本中发生变更
  */
 public class EmailNotify implements NotifyService {
 

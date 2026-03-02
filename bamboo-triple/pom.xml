@@ -63,13 +63,6 @@
             <artifactId>aspectjweaver</artifactId>
             <scope>provided</scope>
         </dependency>
-
-        <!-- Spring Web (provided - 用于 @Ordered) -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 
     <build>

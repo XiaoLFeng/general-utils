@@ -275,9 +275,8 @@ public enum ErrorCode {
      * <p>
      * 远程服务请求失败, 用于定义远程微服务HTTP调用失败的异常信息；
      * 该错误码为 40027，用于标识微服务间通信错误；用于返回远程服务请求失败信息。
-     * <p>
      * 使用场景：当调用其他微服务的HTTP接口时，如果返回非Success状态，SDK会抛出
-     * {@link com.xlf.utility.exception.RequestException}，
+     * {@link com.xlf.utility.exception.library.RequestException}，
      * 全局异常处理器捕获后使用此错误码返回标准化错误响应。
      * <p>
      * 该错误码为 REQUEST_ERROR；该错误码为 40027； 该错误信息为 远程服务请求失败。
