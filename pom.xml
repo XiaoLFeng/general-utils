@@ -6,7 +6,7 @@
 
     <groupId>com.x-lf.utility</groupId>
     <artifactId>general-utils</artifactId>
-    <version>2.0.0-beta2</version>
+    <version>2.0.0-beta3</version>
     <name>general-utils</name>
     <packaging>pom</packaging>
     <description>筱锋通用公共仓库 - 多模块基础库</description>
@@ -47,7 +47,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Dependency Versions -->
-        <spring-boot.version>3.5.10</spring-boot.version>
+        <spring-boot.version>3.5.11</spring-boot.version>
         <hutool.version>5.8.43</hutool.version>
         <mybatis-plus.version>3.5.15</mybatis-plus.version>
         <jbcrypt.version>0.4</jbcrypt.version>

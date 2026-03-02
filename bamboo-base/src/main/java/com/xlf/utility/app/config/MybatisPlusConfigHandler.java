@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.autoconfigure.MybatisPlusPropertiesCustomizer;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 
 import java.util.Optional;
@@ -35,7 +36,6 @@ import java.util.Optional;
  * @since v2.0.0-beta1
  */
 @RequiredArgsConstructor
-@SuppressWarnings("unused")
 public class MybatisPlusConfigHandler {
     protected final UtilityBaseProperties properties;
 
@@ -63,6 +63,7 @@ public class MybatisPlusConfigHandler {
      * @return 配置好分页插件的 MybatisPlusInterceptor 实例
      */
     @Bean
+    @ConditionalOnMissingBean(MybatisPlusInterceptor.class)
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         return Optional.of(new MybatisPlusInterceptor())
                 .map(interceptor -> {
@@ -82,6 +83,7 @@ public class MybatisPlusConfigHandler {
      *
      */
     @Bean
+    @ConditionalOnMissingBean(MybatisPlusPropertiesCustomizer.class)
     public MybatisPlusPropertiesCustomizer plusPropertiesCustomizer() {
         return props -> props.getGlobalConfig().setIdentifierGenerator(new OrdinaryGenerator());
     }

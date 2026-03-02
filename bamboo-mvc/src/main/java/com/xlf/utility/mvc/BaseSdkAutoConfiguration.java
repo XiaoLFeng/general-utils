@@ -5,6 +5,7 @@ import com.xlf.utility.app.properties.UtilityBaseProperties;
 import com.xlf.utility.mvc.aspect.DebugAspectHandler;
 import com.xlf.utility.mvc.aspect.LogAspectHandler;
 import com.xlf.utility.mvc.controller.ErrorController;
+import com.xlf.utility.mvc.exception.SystemExceptionHandler;
 import com.xlf.utility.mvc.filter.ContextFilter;
 import com.xlf.utility.mvc.properties.ContextProperties;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,16 +13,16 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 /**
  * Base SDK 自动配置类。
  * <p>
- * 该配置类用于集成基础 SDK 的核心功能，包括切面编程、MyBatis-Plus 拦截器、上下文管理过滤器、日志处理以及 Dubbo 上下文传递。
- * 通过 {@code @ComponentScan} 自动扫描 {@code com.xlf.utility.mvc} 包下的组件。
+ * 该配置类用于集成基础 SDK 的核心功能，包括切面编程、MyBatis-Plus 拦截器、上下文管理过滤器、日志处理以及异常处理。
+ * 所有组件通过 {@code @Bean} 方法显式注册，避免 {@code @ComponentScan} 导致的 Bean 冲突问题。
  * </p>
  * <p>
  * 主要配置功能如下：
@@ -32,7 +33,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
  *     <li>自动配置 MyBatis-Plus 分页拦截器和 ID 生成器（基于 {@code utility.base} 配置）。</li>
  *     <li>注册上下文过滤器，用于管理请求上下文及 UUID 传递。</li>
  *     <li>注册日志、调试及错误处理的切面与控制器。</li>
- *     <li>集成 Dubbo RPC 上下文传递切面。</li>
+ *     <li>注册统一异常处理器。</li>
  * </ul>
  *
  * @author xiao_lfeng
@@ -42,7 +43,6 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @Configuration
 @EnableAspectJAutoProxy
 @EnableConfigurationProperties(ContextProperties.class)
-@ComponentScan("com.xlf.utility.mvc")
 public class BaseSdkAutoConfiguration {
 
     @Bean
@@ -73,5 +73,11 @@ public class BaseSdkAutoConfiguration {
     @Bean
     public ErrorController errorController() {
         return new ErrorController();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public SystemExceptionHandler systemExceptionHandler() {
+        return new SystemExceptionHandler();
     }
 }

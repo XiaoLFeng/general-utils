@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ErrorController implements IErrorController {
 
     @Override
-    @RequestMapping("/error")
     public ResponseEntity<BaseResponse<?>> error() {
         throw new ServerInternalErrorException("未定义任何报错信息");
     }
