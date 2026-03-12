@@ -106,7 +106,7 @@ public abstract class InitPrepareAlgorithmHandler {
     protected final void checkMigrateTable(String schema) {
         SqlDialectStrategy strategy = strategyFactory.getStrategy(dbType);
 
-        boolean tableExists = this.checkTableExists(schema, "awaken_migrate");
+        boolean tableExists = this.checkTableExists(schema, "bamboo_migrate");
 
         if (!tableExists) {
             String sqlString = strategy.getCreateMigrateTableSql();
@@ -122,13 +122,13 @@ public abstract class InitPrepareAlgorithmHandler {
                         throw new RuntimeException("创建迁移记录表失败", e);
                     }
                 });
-                log.debug("创建表成功 | awaken_migrate");
+                log.debug("创建表成功 | bamboo_migrate");
             } catch (Exception e) {
                 log.error("执行SQL语句失败 | {}", e.getMessage(), e);
                 System.exit(1);
             }
         } else {
-            log.info("表 awaken_migrate 已存在，跳过创建。");
+            log.info("表 bamboo_migrate 已存在，跳过创建。");
         }
     }
 

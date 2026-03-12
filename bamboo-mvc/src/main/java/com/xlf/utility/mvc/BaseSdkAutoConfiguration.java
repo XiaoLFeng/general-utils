@@ -30,8 +30,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
  * </p>
  * <ul>
  *     <li>启用 AspectJ 自动代理支持。</li>
- *     <li>绑定 MVC 上下文管理配置属性 ({@code utility.context.mvc})。</li>
- *     <li>自动配置 MyBatis-Plus 分页拦截器和 ID 生成器（基于 {@code utility.base} 配置）。</li>
+ *     <li>绑定 MVC 上下文管理配置属性 ({@code bamboo.context})。</li>
+ *     <li>自动配置 MyBatis-Plus 分页拦截器和 ID 生成器（基于 {@code bamboo.base} 配置）。</li>
  *     <li>注册上下文过滤器，用于管理请求上下文及 UUID 传递。</li>
  *     <li>注册日志、调试及错误处理的切面与控制器。</li>
  *     <li>注册统一异常处理器。</li>

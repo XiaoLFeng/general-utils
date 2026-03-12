@@ -30,7 +30,7 @@ public class CoreDatabaseAutoConfiguration {
 
     @Bean
     @ConditionalOnProperty(
-            name = "utility.base.datasource.db-type",
+            name = "bamboo.base.datasource.db-type",
             havingValue = "mysql",
             matchIfMissing = true
     )
@@ -40,7 +40,7 @@ public class CoreDatabaseAutoConfiguration {
 
     @Bean
     @ConditionalOnProperty(
-            name = "utility.base.datasource.db-type",
+            name = "bamboo.base.datasource.db-type",
             havingValue = "postgresql"
     )
     public PostgresTableHandlerDAO postgresTableHandlerDAO() {
