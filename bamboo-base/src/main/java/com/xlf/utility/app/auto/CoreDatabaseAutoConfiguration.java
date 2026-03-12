@@ -9,6 +9,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -24,6 +25,7 @@ import org.springframework.context.annotation.Configuration;
         "org.apache.ibatis.session.SqlSessionFactory"
 })
 @MapperScan("com.xlf.utility.mapper")
+@ComponentScan("com.xlf.utility.strategy")
 public class CoreDatabaseAutoConfiguration {
 
     @Bean

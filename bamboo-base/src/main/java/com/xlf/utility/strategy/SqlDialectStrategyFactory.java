@@ -2,6 +2,7 @@ package com.xlf.utility.strategy;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.xlf.utility.exception.library.ServerInternalErrorException;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -35,7 +36,6 @@ public class SqlDialectStrategyFactory {
         return strategies.stream()
                 .filter(strategy -> strategy.supports(dbType))
                 .findFirst()
-                .orElseThrow(() -> new ServerInternalErrorException(
-                        "不支持的数据库类型: " + dbType));
+                .orElseThrow(() -> new ServerInternalErrorException("不支持的数据库类型: " + dbType));
     }
 }
