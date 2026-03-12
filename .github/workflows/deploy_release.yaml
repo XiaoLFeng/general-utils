@@ -4,12 +4,26 @@ on:
   release:
     types: [released]  # 发布 Release 时触发（非 draft/prerelease）
 
+permissions:
+  contents: write  # 允许上传 Release assets
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
+
+      - name: 提取版本号并更新 POM
+        run: |
+          # 从 tag (v2.0.0) 提取版本号 (2.0.0)
+          RELEASE_TAG="${{ github.event.release.tag_name }}"
+          VERSION="${RELEASE_TAG#v}"
+          echo "Release Tag: $RELEASE_TAG"
+          echo "Version: $VERSION"
+          # 更新所有模块的 pom.xml 版本
+          mvn versions:set -DnewVersion="$VERSION" -DgenerateBackupPoms=false
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: 设置 JDK
         uses: actions/setup-java@v4
@@ -27,6 +41,7 @@ jobs:
 
       - name: 发布到 Maven 中央仓库
         run: mvn clean deploy -P release -DskipTests
+
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
