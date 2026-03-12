@@ -6,7 +6,7 @@
 
     <groupId>com.x-lf.utility</groupId>
     <artifactId>general-utils</artifactId>
-    <version>2.0.0-beta3</version>
+    <version>2.0.0</version>
     <name>general-utils</name>
     <packaging>pom</packaging>
     <description>筱锋通用公共仓库 - 多模块基础库</description>
